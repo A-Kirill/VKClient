@@ -14,7 +14,7 @@ class WebLoginViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
     
-    let urlApi = "https://api.vk.com/method/"
+    let vkApi = VKApi()
     
     override func viewDidLoad() {
         var urlComponents = URLComponents()
@@ -36,9 +36,6 @@ class WebLoginViewController: UIViewController {
         
         webView.navigationDelegate = self
     }
-    
-    
-    
 }
 
 extension WebLoginViewController: WKNavigationDelegate {
@@ -65,84 +62,88 @@ extension WebLoginViewController: WKNavigationDelegate {
         let tokenVK = params?["access_token"]
         let userIdVK = params?["user_id"]
         
-        
         //adding params to singletone
         Session.instance.token = tokenVK ?? ""
         Session.instance.userId = userIdVK ?? ""
         
-        decisionHandler(.cancel)
+        vkApi.getFriends()
+        vkApi.getUserGroups()
+        vkApi.getUserPhoto()
+        vkApi.getSearchedGroup(for: "ios developers")
         
-        getFriends()
-        getUserGroups()
-        getUserPhoto()
-        getSearchedGroup(for: "ios developers")
+        decisionHandler(.cancel)
     }
-                //https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
-        func getFriends() {
-            let method = "friends.get"
-            let parameters: Parameters = [
-                "user_id": Session.instance.userId,
-                "order": "name",
-                "fields": "domain",
-                "access_token": Session.instance.token,
-                "v": "5.102"
-            ]
-    
-            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-                    print("__________________ Friends List __________________")
-                    print(response.value ?? "")
-            }
-        }
-    
-        func getUserGroups() {
-            let method = "groups.get"
-            let parameters: Parameters = [
-                "user_id": Session.instance.userId,
-                "extended": "0", //1-full information about groups, 0 - default(only IDs)
-                "access_token": Session.instance.token,
-                "v": "5.102"
-            ]
-    
-            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-                    print("__________________ User Groups __________________ ")
-                print(response.value ?? "")
-            }
-        }
-    
-        func getUserPhoto() {
-            let method = "photos.get"
-            let parameters: Parameters = [
-                "owner_id": Session.instance.userId,
-                "album_id": "profile", // "wall", "saved"
-                "extended": "1", //if its group's photos should add "-1"
-                "access_token": Session.instance.token,
-                "v": "5.102"
-            ]
-    
-            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-                    print("__________________ User Photos __________________")
-                    print(response.value ?? "")
-            }
-        }
-    
-
-    
-        func getSearchedGroup(for keyword: String) {
-            let method = "groups.search"
-            let parameters: Parameters = [
-                "q": keyword,
-                "type": "group",    // "page", "event"
-                "sort": "0", // "2" sort for max amount followers
-                "access_token": Session.instance.token,
-                "v": "5.102"
-            ]
-    
-            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-                    print("__________________ Searched Groups __________________")
-                    print(response.value ?? "" )
-            }
-        }
 }
 
 
+
+class VKApi {
+    
+    let urlApi = "https://api.vk.com/method/"
+    //https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
+    func getFriends() {
+        let method = "friends.get"
+        let parameters: Parameters = [
+            "user_id": Session.instance.userId,
+            "order": "name",
+            "fields": "domain",
+            "access_token": Session.instance.token,
+            "v": "5.102"
+        ]
+        
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+            print("__________________ Friends List __________________")
+            print(response.value ?? "")
+        }
+    }
+    
+    func getUserGroups() {
+        let method = "groups.get"
+        let parameters: Parameters = [
+            "user_id": Session.instance.userId,
+            "extended": "0", //1-full information about groups, 0 - default(only IDs)
+            "access_token": Session.instance.token,
+            "v": "5.102"
+        ]
+        
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+            print("__________________ User Groups __________________ ")
+            print(response.value ?? "")
+        }
+    }
+    
+    func getUserPhoto() {
+        let method = "photos.get"
+        let parameters: Parameters = [
+            "owner_id": Session.instance.userId,
+            "album_id": "profile", // "wall", "saved"
+            "extended": "1", //if its group's photos should add "-1"
+            "access_token": Session.instance.token,
+            "v": "5.102"
+        ]
+        
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+            print("__________________ User Photos __________________")
+            print(response.value ?? "")
+        }
+    }
+    
+    
+    
+    func getSearchedGroup(for keyword: String) {
+        let method = "groups.search"
+        let parameters: Parameters = [
+            "q": keyword,
+            "type": "group",    // "page", "event"
+            "sort": "0", // "2" sort for max amount followers
+            "access_token": Session.instance.token,
+            "v": "5.102"
+        ]
+        
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+            print("__________________ Searched Groups __________________")
+            print(response.value ?? "" )
+        }
+    }
+}
 
