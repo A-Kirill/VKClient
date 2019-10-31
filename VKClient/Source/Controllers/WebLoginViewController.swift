@@ -14,7 +14,8 @@ class WebLoginViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
     
-    let vkApi = VKApi()
+  //  let vkApi = VKApi()
+  //  var friends = [Friend]()
     
     override func viewDidLoad() {
         var urlComponents = URLComponents()
@@ -66,22 +67,27 @@ extension WebLoginViewController: WKNavigationDelegate {
         Session.instance.token = tokenVK ?? ""
         Session.instance.userId = userIdVK ?? ""
         
-        vkApi.getFriends()
-        vkApi.getUserGroups()
-        vkApi.getUserPhoto()
-        vkApi.getSearchedGroup(for: "ios developers")
+       // vkApi.getFriends()
+//        vkApi.getUserGroups()
+//        vkApi.getUserPhoto()
+//        vkApi.getSearchedGroup(for: "ios developers")
+        
+        
+//        vkApi.getFriends() { [weak self] friends in
+//            self?.friends = friends
+//        }
         
         decisionHandler(.cancel)
     }
 }
 
-
+    //example link: https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
 
 class VKApi {
     
     let urlApi = "https://api.vk.com/method/"
-    //https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
-    func getFriends() {
+
+    func getFriends(completion: @escaping ([Friend]) -> Void ) {
         let method = "friends.get"
         let parameters: Parameters = [
             "user_id": Session.instance.userId,
@@ -91,59 +97,107 @@ class VKApi {
             "v": "5.102"
         ]
         
-        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-            print("__________________ Friends List __________________")
-            print(response.value ?? "")
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.value else { return }
+            let friend = try! JSONDecoder().decode(FriendResponse.self, from: data).items
+            completion(friend)
         }
     }
     
-    func getUserGroups() {
-        let method = "groups.get"
-        let parameters: Parameters = [
-            "user_id": Session.instance.userId,
-            "extended": "0", //1-full information about groups, 0 - default(only IDs)
-            "access_token": Session.instance.token,
-            "v": "5.102"
-        ]
-        
-        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-            print("__________________ User Groups __________________ ")
-            print(response.value ?? "")
+        func getUserGroups(completion: @escaping ([Groups]) -> Void ) {
+            let method = "groups.get"
+            let parameters: Parameters = [
+                "user_id": Session.instance.userId,
+                "extended": "1", //1-full information about groups, 0 - default(only IDs)
+                "access_token": Session.instance.token,
+                "v": "5.102"
+            ]
+    
+            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+                guard let data = response.value else { return }
+                let groups = try! JSONDecoder().decode(GroupResponse.self, from: data).items
+                completion(groups)
+            }
         }
-    }
     
-    func getUserPhoto() {
-        let method = "photos.get"
-        let parameters: Parameters = [
-            "owner_id": Session.instance.userId,
-            "album_id": "profile", // "wall", "saved"
-            "extended": "1", //if its group's photos should add "-1"
-            "access_token": Session.instance.token,
-            "v": "5.102"
-        ]
-        
-        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-            print("__________________ User Photos __________________")
-            print(response.value ?? "")
+        func getUserPhoto(completion: @escaping ([PhotoItem]) -> Void ) {
+            let method = "photos.get"
+            let parameters: Parameters = [
+                "owner_id": Session.instance.userId,
+                "album_id": "profile", // "wall", "saved"
+                "extended": "1", //if its group's photos should add "-1"
+                "access_token": Session.instance.token,
+                "v": "5.102"
+            ]
+    
+            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
+                guard let data = response.value else { return }
+                let photos = try! JSONDecoder().decode(PhotoResponse.self, from: data).items
+                completion(photos)
+            }
         }
-    }
     
-    
-    
-    func getSearchedGroup(for keyword: String) {
-        let method = "groups.search"
-        let parameters: Parameters = [
-            "q": keyword,
-            "type": "group",    // "page", "event"
-            "sort": "0", // "2" sort for max amount followers
-            "access_token": Session.instance.token,
-            "v": "5.102"
-        ]
-        
-        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-            print("__________________ Searched Groups __________________")
-            print(response.value ?? "" )
-        }
-    }
+//    func getFriends() {
+//        let method = "friends.get"
+//        let parameters: Parameters = [
+//            "user_id": Session.instance.userId,
+//            "order": "name",
+//            "fields": "domain",
+//            "access_token": Session.instance.token,
+//            "v": "5.102"
+//        ]
+//        
+//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+//            print("__________________ Friends List __________________")
+//            print(response.value ?? "")
+//        }
+//    }
+//
+//    func getUserGroups() {
+//        let method = "groups.get"
+//        let parameters: Parameters = [
+//            "user_id": Session.instance.userId,
+//            "extended": "0", //1-full information about groups, 0 - default(only IDs)
+//            "access_token": Session.instance.token,
+//            "v": "5.102"
+//        ]
+//
+//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+//            print("__________________ User Groups __________________ ")
+//            print(response.value ?? "")
+//        }
+//    }
+//
+//    func getUserPhoto() {
+//        let method = "photos.get"
+//        let parameters: Parameters = [
+//            "owner_id": Session.instance.userId,
+//            "album_id": "profile", // "wall", "saved"
+//            "extended": "1", //if its group's photos should add "-1"
+//            "access_token": Session.instance.token,
+//            "v": "5.102"
+//        ]
+//
+//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+//            print("__________________ User Photos __________________")
+//            print(response.value ?? "")
+//        }
+//    }
+//
+//    func getSearchedGroup(for keyword: String) {
+//        let method = "groups.search"
+//        let parameters: Parameters = [
+//            "q": keyword,
+//            "type": "group",    // "page", "event"
+//            "sort": "0", // "2" sort for max amount followers
+//            "access_token": Session.instance.token,
+//            "v": "5.102"
+//        ]
+//
+//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+//            print("__________________ Searched Groups __________________")
+//            print(response.value ?? "" )
+//        }
+//    }
 }
 

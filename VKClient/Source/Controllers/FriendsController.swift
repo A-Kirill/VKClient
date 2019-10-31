@@ -18,8 +18,6 @@ class FriendsController: UITableViewController {
         User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
     ]
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
