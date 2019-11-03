@@ -14,8 +14,8 @@ class WebLoginViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
     
-  //  let vkApi = VKApi()
-  //  var friends = [Friend]()
+//    let vkApi = VKApi()
+//    var friends = [Friend]()
     
     override func viewDidLoad() {
         var urlComponents = URLComponents()
@@ -67,7 +67,7 @@ extension WebLoginViewController: WKNavigationDelegate {
         Session.instance.token = tokenVK ?? ""
         Session.instance.userId = userIdVK ?? ""
         
-       // vkApi.getFriends()
+//       vkApi.getFriends()
 //        vkApi.getUserGroups()
 //        vkApi.getUserPhoto()
 //        vkApi.getSearchedGroup(for: "ios developers")
@@ -104,7 +104,7 @@ class VKApi {
         }
     }
     
-        func getUserGroups(completion: @escaping ([Groups]) -> Void ) {
+        func getUserGroups(completion: @escaping ([ItemGroup]) -> Void ) {
             let method = "groups.get"
             let parameters: Parameters = [
                 "user_id": Session.instance.userId,
@@ -113,7 +113,7 @@ class VKApi {
                 "v": "5.102"
             ]
     
-            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
+            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
                 guard let data = response.value else { return }
                 let groups = try! JSONDecoder().decode(GroupResponse.self, from: data).items
                 completion(groups)
