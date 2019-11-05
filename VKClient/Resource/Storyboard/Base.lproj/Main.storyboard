@@ -33,11 +33,12 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="V3S-lk-1UU" id="HYs-7C-j1F"/>
+                        <segue destination="UCt-Vx-cL5" kind="show" identifier="fromWebLogin" id="GYY-JK-PTt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMP-Cf-SU0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-200.00000000000003" y="-311.38392857142856"/>
+            <point key="canvasLocation" x="-59" y="176"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -162,7 +163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32" y="487"/>
+            <point key="canvasLocation" x="-59" y="895"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Oi6-b0-VxA">
@@ -550,4 +551,7 @@
         <image name="newspaper" width="37" height="37"/>
         <image name="team" width="37" height="37"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="GYY-JK-PTt"/>
+    </inferredMetricsTieBreakers>
 </document>

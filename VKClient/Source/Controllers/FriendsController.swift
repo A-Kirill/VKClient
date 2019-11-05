@@ -10,16 +10,23 @@ import UIKit
 
 class FriendsController: UITableViewController {
     
-    var allFriends: [User] = [
-        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
-        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
-        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
-        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
-        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
-    ]
+//    var allFriends: [User] = [
+//        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
+//        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
+//        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
+//        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
+//        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
+//    ]
+    let vkApi = VKApi()
+    var allFriends = [Friend]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        vkApi.getFriends(){ [weak self] allFriends in
+            self?.allFriends = allFriends
+            self?.tableView.reloadData()
+        }
     }
     
     
@@ -59,9 +66,9 @@ class FriendsController: UITableViewController {
     
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return String(allFriends[section].name[0])
-    }
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return String(allFriends[section].name[0])
+//    }
     
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,8 +84,9 @@ class FriendsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as! FriendCell
 
-        cell.friendNameLabel.text = allFriends[indexPath.section].name
-        cell.friendImageView?.image = allFriends[indexPath.section].avatar
+//        cell.friendNameLabel.text = allFriends[indexPath.section].name
+       // cell.friendImageView?.image = allFriends[indexPath.section].avatar
+                cell.friendNameLabel.text = allFriends[indexPath.section].firstName + " " + allFriends[indexPath.section].lastName
         
         return cell
     }
@@ -97,8 +105,9 @@ class FriendsController: UITableViewController {
             let index = tableView.indexPathForSelectedRow?.section ?? 0
             if allFriends.count > index {
                 let friend = allFriends[index]
-                destinationController.navigationItem.title = friend.name
-                destinationController.image = friend.photo
+//                destinationController.navigationItem.title = friend.name
+//                destinationController.image = friend.photo
+                destinationController.navigationItem.title = friend.firstName
             }
         }
     }

@@ -14,9 +14,6 @@ class WebLoginViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
     
-//    let vkApi = VKApi()
-//    var friends = [Friend]()
-    
     override func viewDidLoad() {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -77,6 +74,8 @@ extension WebLoginViewController: WKNavigationDelegate {
 //            self?.friends = friends
 //        }
         
+        performSegue(withIdentifier: "fromWebLogin", sender: tokenVK)
+        
         decisionHandler(.cancel)
     }
 }
@@ -92,15 +91,15 @@ class VKApi {
         let parameters: Parameters = [
             "user_id": Session.instance.userId,
             "order": "name",
-            "fields": "domain",
+            "fields": "domain, photo_100",
             "access_token": Session.instance.token,
             "v": "5.102"
         ]
         
         Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-            let friend = try! JSONDecoder().decode(FriendResponse.self, from: data).items
-            completion(friend)
+            let friend = try! JSONDecoder().decode(FriendResponseWrapped.self, from: data)
+            completion(friend.response.items)
         }
     }
     

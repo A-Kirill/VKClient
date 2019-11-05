@@ -14,24 +14,26 @@ struct User {
     var photo: [UIImage?]
 }
 
+class FriendResponseWrapped: Decodable {
+    let response: FriendResponse
+}
 
 class FriendResponse: Decodable {
+    let count: Int = 0
     let items: [Friend]
-
-    enum CodingKeys: String, CodingKey {
-        case items
-    }
 }
 
 class Friend: Decodable {
     var id: Int = 0
     var firstName: String = ""
     var lastName: String = ""
+    var photo: String = ""
 
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"
         case lastName = "last_name"
+        case photo = "photo_100"
     }
 
     convenience required init(from decoder: Decoder) throws {
@@ -40,5 +42,6 @@ class Friend: Decodable {
         self.id = try values.decode(Int.self, forKey: .id)
         self.firstName = try values.decode(String.self, forKey: .firstName)
         self.lastName = try values.decode(String.self, forKey: .lastName)
+        self.photo = try values.decode(String.self, forKey: .photo)
     }
 }
