@@ -13,7 +13,7 @@ struct Group {
     var logo : UIImage?
 }
 
-class Groups: Codable {
+class GroupResponseWrapped: Codable {
     let response: GroupResponse
     
     init(response: GroupResponse) {
@@ -24,16 +24,16 @@ class Groups: Codable {
 // MARK: - Response
 class GroupResponse: Codable {
     let count: Int
-    let items: [ItemGroup]
+    let items: [Groups]
     
-    init(count: Int, items: [ItemGroup]) {
+    init(count: Int, items: [Groups]) {
         self.count = count
         self.items = items
     }
 }
 
 // MARK: - Item
-class ItemGroup: Codable {
+class Groups: Codable {
     let id: Int
     let name, screenName: String
     let isClosed: Int

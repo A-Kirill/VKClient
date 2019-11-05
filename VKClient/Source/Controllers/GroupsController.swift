@@ -10,21 +10,31 @@ import UIKit
 
 class GroupsController: UITableViewController {
     
-    var allGroups: [Group] = []
+//    var allGroups: [Group] = []
+    let vkApi = VKApi()
+    var allGroups = [Groups]()
     
-    @IBAction func addGroups(segue: UIStoryboardSegue) {
-        if segue.identifier == "addGroup" {
-            guard let allGroupController = segue.source as? AllGroupsController  else { return }
-            guard let indexPath = allGroupController.tableView.indexPathForSelectedRow else {return}
-            
-            let group = allGroupController.allGroups[indexPath.row]
-            if !allGroups.contains(where: {$0.name == group.name}) {
-                allGroups.append(allGroupController.allGroups[indexPath.row])
-                tableView.insertRows(at: [IndexPath(row: allGroups.count - 1, section: 0)], with: .fade)
-            }
+//    @IBAction func addGroups(segue: UIStoryboardSegue) {
+//        if segue.identifier == "addGroup" {
+//            guard let allGroupController = segue.source as? AllGroupsController  else { return }
+//            guard let indexPath = allGroupController.tableView.indexPathForSelectedRow else {return}
+//
+//            let group = allGroupController.allGroups[indexPath.row]
+//            if !allGroups.contains(where: {$0.name == group.name}) {
+//                allGroups.append(allGroupController.allGroups[indexPath.row])
+//                tableView.insertRows(at: [IndexPath(row: allGroups.count - 1, section: 0)], with: .fade)
+//            }
+//        }
+//    }
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        vkApi.getUserGroups(){ [weak self] allGroups in
+            self?.allGroups = allGroups
+            self?.tableView.reloadData()
         }
     }
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allGroups.count
@@ -34,7 +44,7 @@ class GroupsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
         cell.nameLabel.text = allGroups[indexPath.row].name
-        cell.groupImageView?.image = allGroups[indexPath.row].logo
+//        cell.groupImageView?.image = allGroups[indexPath.row].logo
         return cell
     }
     
@@ -53,5 +63,4 @@ class GroupsController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
 }

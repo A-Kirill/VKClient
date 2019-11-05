@@ -103,7 +103,7 @@ class VKApi {
         }
     }
     
-        func getUserGroups(completion: @escaping ([ItemGroup]) -> Void ) {
+        func getUserGroups(completion: @escaping ([Groups]) -> Void ) {
             let method = "groups.get"
             let parameters: Parameters = [
                 "user_id": Session.instance.userId,
@@ -114,8 +114,8 @@ class VKApi {
     
             Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
                 guard let data = response.value else { return }
-                let groups = try! JSONDecoder().decode(GroupResponse.self, from: data).items
-                completion(groups)
+                let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
+                completion(groups.response.items)
             }
         }
     
