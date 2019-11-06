@@ -86,12 +86,13 @@ class VKApi {
     
     let urlApi = "https://api.vk.com/method/"
 
+    //get friends
     func getFriends(completion: @escaping ([Friend]) -> Void ) {
         let method = "friends.get"
         let parameters: Parameters = [
             "user_id": Session.instance.userId,
             "order": "name",
-            "fields": "domain, photo_100",
+            "fields": "domain, photo_50",
             "access_token": Session.instance.token,
             "v": "5.102"
         ]
@@ -103,6 +104,7 @@ class VKApi {
         }
     }
     
+    //get groups
         func getUserGroups(completion: @escaping ([Groups]) -> Void ) {
             let method = "groups.get"
             let parameters: Parameters = [
@@ -118,11 +120,12 @@ class VKApi {
                 completion(groups.response.items)
             }
         }
-    
-        func getUserPhoto(completion: @escaping ([PhotoItem]) -> Void ) {
+  
+    //get user's Photo
+    func getUserPhoto(for userId: String, completion: @escaping ([PhotoItem]) -> Void ) {
             let method = "photos.get"
             let parameters: Parameters = [
-                "owner_id": Session.instance.userId,
+                "owner_id": userId,
                 "album_id": "profile", // "wall", "saved"
                 "extended": "1", //if its group's photos should add "-1"
                 "access_token": Session.instance.token,
@@ -133,6 +136,24 @@ class VKApi {
                 guard let data = response.value else { return }
                 let photos = try! JSONDecoder().decode(PhotoResponse.self, from: data).items
                 completion(photos)
+            }
+        }
+    
+    //get Groups by keyword
+    func getSearchedGroup(for keyword: String, completion: @escaping ([Groups]) -> Void ) {
+            let method = "groups.search"
+            let parameters: Parameters = [
+                "q": keyword,
+                "type": "group",    // "page", "event"
+                "sort": "0", // "2" sort for max amount followers
+                "access_token": Session.instance.token,
+                "v": "5.102"
+            ]
+    
+            Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
+                guard let data = response.value else { return }
+                let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
+                completion(groups.response.items)
             }
         }
     

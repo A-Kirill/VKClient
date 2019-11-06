@@ -33,7 +33,7 @@ class Friend: Decodable {
         case id
         case firstName = "first_name"
         case lastName = "last_name"
-        case photo = "photo_100"
+        case photo = "photo_50"
     }
 
     convenience required init(from decoder: Decoder) throws {

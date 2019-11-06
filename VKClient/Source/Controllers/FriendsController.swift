@@ -86,7 +86,20 @@ class FriendsController: UITableViewController {
 
 //        cell.friendNameLabel.text = allFriends[indexPath.section].name
        // cell.friendImageView?.image = allFriends[indexPath.section].avatar
-                cell.friendNameLabel.text = allFriends[indexPath.section].firstName + " " + allFriends[indexPath.section].lastName
+        cell.friendNameLabel.text = allFriends[indexPath.section].firstName + " " + allFriends[indexPath.section].lastName
+        
+        //String URL to UIImage
+        if let imageURL = URL(string: allFriends[indexPath.section].photo) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell.friendImageView.image = image
+                    }
+                }
+            }
+        }
         
         return cell
     }

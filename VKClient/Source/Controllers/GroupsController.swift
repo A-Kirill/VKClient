@@ -14,18 +14,18 @@ class GroupsController: UITableViewController {
     let vkApi = VKApi()
     var allGroups = [Groups]()
     
-//    @IBAction func addGroups(segue: UIStoryboardSegue) {
-//        if segue.identifier == "addGroup" {
-//            guard let allGroupController = segue.source as? AllGroupsController  else { return }
-//            guard let indexPath = allGroupController.tableView.indexPathForSelectedRow else {return}
-//
-//            let group = allGroupController.allGroups[indexPath.row]
-//            if !allGroups.contains(where: {$0.name == group.name}) {
-//                allGroups.append(allGroupController.allGroups[indexPath.row])
-//                tableView.insertRows(at: [IndexPath(row: allGroups.count - 1, section: 0)], with: .fade)
-//            }
-//        }
-//    }
+    @IBAction func addGroups(segue: UIStoryboardSegue) {
+        if segue.identifier == "addGroup" {
+            guard let allGroupController = segue.source as? AllGroupsController  else { return }
+            guard let indexPath = allGroupController.tableView.indexPathForSelectedRow else {return}
+
+            let group = allGroupController.allGroups[indexPath.row]
+            if !allGroups.contains(where: {$0.name == group.name}) {
+                allGroups.append(allGroupController.allGroups[indexPath.row])
+                tableView.insertRows(at: [IndexPath(row: allGroups.count - 1, section: 0)], with: .fade)
+            }
+        }
+    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +43,21 @@ class GroupsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
-        cell.nameLabel.text = allGroups[indexPath.row].name
+
 //        cell.groupImageView?.image = allGroups[indexPath.row].logo
+        cell.nameLabel.text = allGroups[indexPath.row].name
+
+        if let imageURL = URL(string: allGroups[indexPath.row].photo50) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell.groupImageView.image = image
+                    }
+                }
+            }
+        }
         return cell
     }
     

@@ -10,15 +10,23 @@ import UIKit
 
 class AllGroupsController: UITableViewController {
     
-    var allGroups: [Group] = [
-        Group(name: "VKPay", logo: UIImage(named: "VKPay")),
-        Group(name: "GeekBrains", logo: UIImage(named: "GeekBrains")),
-        Group(name: "Swift", logo: UIImage(named: "Swift")),
-        Group(name: "Mail.ru", logo: UIImage(named: "Mail.ru"))
-    ]
+    let vkApi = VKApi()
+    var allGroups = [Groups]()
+    
+//    var allGroups: [Group] = [
+//        Group(name: "VKPay", logo: UIImage(named: "VKPay")),
+//        Group(name: "GeekBrains", logo: UIImage(named: "GeekBrains")),
+//        Group(name: "Swift", logo: UIImage(named: "Swift")),
+//        Group(name: "Mail.ru", logo: UIImage(named: "Mail.ru"))
+//    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        vkApi.getSearchedGroup(for: "IOS developers"){ [weak self] allGroups in
+            self?.allGroups = allGroups
+            self?.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -30,8 +38,22 @@ class AllGroupsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
+//        cell.groupImageView?.image = allGroups[indexPath.row].logo
         cell.nameLabel.text = allGroups[indexPath.row].name
-        cell.groupImageView?.image = allGroups[indexPath.row].logo
+
+        if let imageURL = URL(string: allGroups[indexPath.row].photo50) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell.groupImageView.image = image
+                    }
+                }
+            }
+        }
+
+        
         return cell
     }
     
