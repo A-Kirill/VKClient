@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import WebKit
+import RealmSwift
 
 class WebLoginViewController: UIViewController {
 
@@ -69,11 +70,6 @@ extension WebLoginViewController: WKNavigationDelegate {
 //        vkApi.getUserPhoto()
 //        vkApi.getSearchedGroup(for: "ios developers")
         
-        
-//        vkApi.getFriends() { [weak self] friends in
-//            self?.friends = friends
-//        }
-        
         performSegue(withIdentifier: "fromWebLogin", sender: tokenVK)
         
         decisionHandler(.cancel)
@@ -85,6 +81,18 @@ extension WebLoginViewController: WKNavigationDelegate {
 class VKApi {
     
     let urlApi = "https://api.vk.com/method/"
+    
+    // Generic
+//    func fetchRequest<T: Decodable>(url: String, params: [String: Any], completionHandler: @escaping (T) -> ()) {
+//        Alamofire.request(url, method: .post, parameters: params).responseData { (data) in
+//            do {
+//                let result = try JSONDecoder().decode(T.self, from: data.data!)
+//                completionHandler(result)
+//            } catch {
+//                print("error parsing JSON")
+//            }
+//        }
+//    }
 
     //get friends
     func getFriends(completion: @escaping ([Friend]) -> Void ) {
@@ -97,9 +105,12 @@ class VKApi {
             "v": "5.102"
         ]
         
+      //  fetchRequest(url: urlApi+method, params: parameters, completionHandler: completion)
         Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
             let friend = try! JSONDecoder().decode(FriendResponseWrapped.self, from: data)
+            //save data in realm
+            self.saveFriendData(friend.response.items)
             completion(friend.response.items)
         }
     }
@@ -117,6 +128,9 @@ class VKApi {
             Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
                 guard let data = response.value else { return }
                 let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
+                //save data in Realm
+                self.saveGroupsData(groups.response.items)
+                
                 completion(groups.response.items)
             }
         }
@@ -126,10 +140,11 @@ class VKApi {
             let method = "photos.get"
             let parameters: Parameters = [
                 "owner_id": userId,
-                "album_id": "profile", // "wall", "saved"
+                "album_id": "wall", // "wall", "saved", "profile"
                 "extended": "1", //if its group's photos should add "-1"
                 "access_token": Session.instance.token,
-                "v": "5.102"
+                "v": "5.102",
+                "count": "10"
             ]
     
             Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
@@ -157,6 +172,34 @@ class VKApi {
             }
         }
     
+    //save data in Realm
+    func saveFriendData(_ items: [Friend]) {
+        do {
+            // get access to storage
+            let realm = try Realm()
+            // start change storage
+            realm.beginWrite()
+            // put all objects to storage
+            realm.add(items)
+            // finish all changes
+            try realm.commitWrite()
+        } catch {
+            // if error - print to console
+            print(error)
+        }
+    }
+    
+    func saveGroupsData(_ items: [Groups]) {
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(items)
+            try realm.commitWrite()
+        } catch {
+            print(error)
+        }
+    }
+
 //    func getFriends() {
 //        let method = "friends.get"
 //        let parameters: Parameters = [

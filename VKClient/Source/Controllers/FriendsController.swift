@@ -118,9 +118,10 @@ class FriendsController: UITableViewController {
             let index = tableView.indexPathForSelectedRow?.section ?? 0
             if allFriends.count > index {
                 let friend = allFriends[index]
-//                destinationController.navigationItem.title = friend.name
+                destinationController.navigationItem.title = friend.firstName + " photos"
+                
 //                destinationController.image = friend.photo
-                destinationController.navigationItem.title = friend.firstName
+//                destinationController.navigationItem.title = friend.firstName
             }
         }
     }

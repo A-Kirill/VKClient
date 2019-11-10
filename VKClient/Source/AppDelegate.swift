@@ -15,7 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // UserDefaults
+        let isAuthorized = UserDefaults.standard.bool(forKey: "isAuthorized")
+        print(isAuthorized)
+        UserDefaults.standard.set(true, forKey: "isAuthorized")
+        
         return true
     }
 

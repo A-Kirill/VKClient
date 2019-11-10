@@ -13,6 +13,15 @@ class PhotosController: UICollectionViewController {
     private let reuseIdentifier = "photoCell"
  
     var image: [UIImage?] = [UIImage(named: "empty")]
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+    
+//        vkApi.getUserPhoto(for: friend){ [weak self] friendsPhoto in
+//            self?.friendsPhoto = friendsPhoto
+//            self?.tableView.reloadData()
+//        }
+//    }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
