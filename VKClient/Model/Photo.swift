@@ -28,27 +28,71 @@ class PhotoResponse: Codable {
 }
 
 class PhotoItem: Codable {
-    let id, albumID, ownerID, userID: Int
-    //    let sizes: [Size]
+    let id, albumID, ownerID: Int
+    let sizes: [Size]
     let text: String
     let date: Int
+    let likes: Likes
+    let reposts, comments: Comments
+    let canComment: Int
+    let tags: Comments
 
     enum CodingKeys: String, CodingKey {
         case id
         case albumID = "album_id"
         case ownerID = "owner_id"
-        case userID = "user_id"
-        case /*sizes,*/ text, date
+        case sizes, text, date, likes, reposts, comments
+        case canComment = "can_comment"
+        case tags
     }
 
-    init(id: Int, albumID: Int, ownerID: Int, userID: Int, /*sizes: [Size],*/ text: String, date: Int) {
+    init(id: Int, albumID: Int, ownerID: Int, sizes: [Size], text: String, date: Int, likes: Likes, reposts: Comments, comments: Comments, canComment: Int, tags: Comments) {
         self.id = id
         self.albumID = albumID
         self.ownerID = ownerID
-        self.userID = userID
-        //  self.sizes = sizes
+        self.sizes = sizes
         self.text = text
         self.date = date
+        self.likes = likes
+        self.reposts = reposts
+        self.comments = comments
+        self.canComment = canComment
+        self.tags = tags
+    }
+}
+
+class Comments: Codable {
+    let count: Int
+    
+    init(count: Int) {
+        self.count = count
+    }
+}
+
+class Likes: Codable {
+    let userLikes, count: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case userLikes = "user_likes"
+        case count
+    }
+    
+    init(userLikes: Int, count: Int) {
+        self.userLikes = userLikes
+        self.count = count
+    }
+}
+
+class Size: Codable {
+    let type: String
+    let url: String
+    let width, height: Int
+    
+    init(type: String, url: String, width: Int, height: Int) {
+        self.type = type
+        self.url = url
+        self.width = width
+        self.height = height
     }
 }
 

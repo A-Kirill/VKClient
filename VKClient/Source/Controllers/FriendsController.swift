@@ -118,6 +118,10 @@ class FriendsController: UITableViewController {
             let index = tableView.indexPathForSelectedRow?.section ?? 0
             if allFriends.count > index {
                 let friend = allFriends[index]
+                vkApi.getUserPhoto(for: "\(friend)"){ photosFriend in
+                    destinationController.photosFriend = photosFriend
+//                    destinationController.tableView.reloadData()
+                }
                 destinationController.navigationItem.title = friend.firstName + " photos"
                 
 //                destinationController.image = friend.photo

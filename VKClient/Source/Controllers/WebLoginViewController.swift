@@ -141,16 +141,15 @@ class VKApi {
             let parameters: Parameters = [
                 "owner_id": userId,
                 "album_id": "wall", // "wall", "saved", "profile"
-                "extended": "1", //if its group's photos should add "-1"
+                "extended": "1", //additional params(likes,comments...)default 0
                 "access_token": Session.instance.token,
                 "v": "5.102",
                 "count": "10"
             ]
-    
             Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
                 guard let data = response.value else { return }
-                let photos = try! JSONDecoder().decode(PhotoResponse.self, from: data).items
-                completion(photos)
+                let photos = try! JSONDecoder().decode(Photo.self, from: data)
+                completion(photos.response.items)
             }
         }
     
