@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        //Migration block for Realm
+        let config = Realm.Configuration(
+            schemaVersion: 2,
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                  // Nothing to do!
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
+        
+        //Show start screen if we have token
+        let realm = try! Realm()
+        if let settings = realm.objects(UserSettings.self).first,
+          settings.token != "",
+            settings.id != 0 {
+
+            Session.instance.token = settings.token
+            Session.instance.userId = String(describing: settings.id)
+
+            window = UIWindow(frame: CGRect(x: 0,
+                                            y: 0,
+                                            width: UIScreen.main.bounds.width,
+                                            height: UIScreen.main.bounds.height))
+
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let contentScreen = storyBoard.instantiateViewController(withIdentifier: "MainScreen")
+            window?.rootViewController = contentScreen
+        }
         
         // UserDefaults
         let isAuthorized = UserDefaults.standard.bool(forKey: "isAuthorized")

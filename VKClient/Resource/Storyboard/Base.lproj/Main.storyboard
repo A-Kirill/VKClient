@@ -13,7 +13,7 @@
         <!--Web Login View Controller-->
         <scene sceneID="dVn-gT-dWq">
             <objects>
-                <viewController id="zxS-dp-r0r" customClass="WebLoginViewController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebLoginViewController" id="zxS-dp-r0r" customClass="WebLoginViewController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="To2-r0-snL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -168,7 +168,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Oi6-b0-VxA">
             <objects>
-                <tabBarController id="UCt-Vx-cL5" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainScreen" id="UCt-Vx-cL5" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wJc-66-1Ie">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

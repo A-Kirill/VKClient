@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0508F52C237B0C4A004E950B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0508F52B237B0C4A004E950B /* UserSettings.swift */; };
+		0508F52F237BC703004E950B /* VKApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0508F52E237BC703004E950B /* VKApi.swift */; };
 		05297BBE2364B92B00306039 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05297BBD2364B92B00306039 /* WebKit.framework */; };
 		052ED7232341364200623AD1 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 052ED7222341364200623AD1 /* NewsCell.xib */; };
 		052ED72523413A2500623AD1 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052ED72423413A2500623AD1 /* NewsCell.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0508F52B237B0C4A004E950B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		0508F52E237BC703004E950B /* VKApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKApi.swift; sourceTree = "<group>"; };
 		05297BBD2364B92B00306039 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		052ED7222341364200623AD1 /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		052ED72423413A2500623AD1 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
@@ -85,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0508F52D237BC6E3004E950B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				0508F52E237BC703004E950B /* VKApi.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		050BF004232D577E00DE18D8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +109,7 @@
 		050BF005232D57A300DE18D8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0508F52D237BC6E3004E950B /* API */,
 				05A11C4C234E4227009615B4 /* Animation */,
 				056ABC58232832CA00077607 /* AppDelegate.swift */,
 				050BF006232D584500DE18D8 /* Controllers */,
@@ -187,6 +200,7 @@
 				05484E4F236A962B00968A1B /* Photo.swift */,
 				052ED72823413D8D00623AD1 /* News.swift */,
 				05FF08EA235F8574009EA7B8 /* Session.swift */,
+				0508F52B237B0C4A004E950B /* UserSettings.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -345,12 +359,14 @@
 				053536D62339CDCD00F6C7C4 /* GradientView.swift in Sources */,
 				052ED72923413D8D00623AD1 /* News.swift in Sources */,
 				056ABC5B232832CA00077607 /* LoginViewController.swift in Sources */,
+				0508F52F237BC703004E950B /* VKApi.swift in Sources */,
 				05694F0F232F5C7100F28C85 /* GroupsController.swift in Sources */,
 				058719152332BD28006F00D5 /* Group.swift in Sources */,
 				056ABC59232832CA00077607 /* AppDelegate.swift in Sources */,
 				058719102332B6E3006F00D5 /* PhotoCell.swift in Sources */,
 				058719132332BD18006F00D5 /* User.swift in Sources */,
 				05A11C52234E66D4009615B4 /* PopTransitionAnimator.swift in Sources */,
+				0508F52C237B0C4A004E950B /* UserSettings.swift in Sources */,
 				05A11C50234E6399009615B4 /* CustomNavigationController.swift in Sources */,
 				05694F11232F5D5300F28C85 /* PhotosController.swift in Sources */,
 				052ED72723413B0D00623AD1 /* NewsController.swift in Sources */,
