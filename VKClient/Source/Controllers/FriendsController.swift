@@ -117,12 +117,19 @@ class FriendsController: UITableViewController {
             
             let index = tableView.indexPathForSelectedRow?.section ?? 0
             if allFriends.count > index {
-                let friend = allFriends[index]
-                vkApi.getUserPhoto(for: "\(friend)"){ photosFriend in
+                let chosenFriend = allFriends[index]
+                print(chosenFriend.id)
+                vkApi.getUserPhoto(for: "\(chosenFriend.id)"){ photosFriend in
                     destinationController.photosFriend = photosFriend
-//                    destinationController.tableView.reloadData()
+                    //just for printing urls in consol
+                    for i in photosFriend {
+                        for j in i.sizes {
+//                            print(j.url)
+                            destinationController.urlChosenFriends.append(j.url)
+                        }
+                    }
                 }
-                destinationController.navigationItem.title = friend.firstName + " photos"
+                destinationController.navigationItem.title = chosenFriend.firstName + " photos"
                 
 //                destinationController.image = friend.photo
 //                destinationController.navigationItem.title = friend.firstName

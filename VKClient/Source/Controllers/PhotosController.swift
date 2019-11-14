@@ -12,20 +12,30 @@ class PhotosController: UICollectionViewController {
     
     private let reuseIdentifier = "photoCell"
  
-    var image: [UIImage?] = [UIImage(named: "empty")]
+//    var image: [UIImage?] = [UIImage(named: "empty")]
     var photosFriend = [PhotoItem]()
-
+    var urlChosenFriends = [String]()
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return photosFriend.count
+        return urlChosenFriends.count
 //        return image.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
-        
-        cell.photoImageView.image = image[indexPath.item]
+        if let imageURL = URL(string: urlChosenFriends[indexPath.item]) {
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: imageURL)
+                if let data = data {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        cell.photoImageView.image = image
+                    }
+                }
+            }
+        }
+ //       cell.photoImageView.image = image[indexPath.item]
     
         return cell
     }

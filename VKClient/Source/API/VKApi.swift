@@ -28,8 +28,8 @@ class VKApi {
         //  fetchRequest(url: urlApi+method, params: parameters, completionHandler: completion)
         Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
-                        print(response.error)
-                        print(String(bytes: data, encoding: .utf8))
+//                print(response.error)
+                print(String(bytes: data, encoding: .utf8) ?? "")
             let friend = try! JSONDecoder().decode(FriendResponseWrapped.self, from: data)
             //save data in realm
             self.saveFriendData(friend.response.items)
@@ -70,6 +70,7 @@ class VKApi {
         ]
         Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value else { return }
+//            print(String(bytes: data, encoding: .utf8) ?? "")
             let photos = try! JSONDecoder().decode(Photo.self, from: data)
             completion(photos.response.items)
         }
