@@ -10,7 +10,6 @@ import UIKit
 
 class GroupsController: UITableViewController {
     
-//    var allGroups: [Group] = []
     let vkApi = VKApi()
     var allGroups = [Groups]()
     
@@ -27,13 +26,18 @@ class GroupsController: UITableViewController {
         }
     }
    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        vkApi.getUserGroups(){ [weak self] allGroups in
-            self?.allGroups = allGroups
-            self?.tableView.reloadData()
-        }
+        // 1) request data from Realm
+        self.allGroups = Database.shared.getRealmGroups()
+        self.tableView.reloadData()
+        // 2) Or from web
+//        vkApi.getUserGroups(){ [weak self] allGroups in
+//            self?.allGroups = allGroups
+//            self?.tableView.reloadData()
+//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

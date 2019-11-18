@@ -17,14 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        //creating secret key... Its necessary to save it secure!!! (examp: Keychain)
+       /* var key = Data(count: 64)
+        _ = key.withUnsafeMutableBytes { bytes in
+            SecRandomCopyBytes(kSecRandomDefault, 64, bytes)
+        }*/
+        
         //Migration block for Realm
-        let config = Realm.Configuration(
-            schemaVersion: 2,
-            migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
-                  // Nothing to do!
-                }
-        })
+        let config = Realm.Configuration(/*encryptionKey: key,*/ schemaVersion: 2 )
         Realm.Configuration.defaultConfiguration = config
         
         //Show start screen if we have token

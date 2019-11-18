@@ -15,6 +15,7 @@ class PhotosController: UICollectionViewController {
 //    var image: [UIImage?] = [UIImage(named: "empty")]
     var photosFriend = [PhotoItem]()
     var urlChosenFriends = [String]()
+    var likes = [Int]()
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
@@ -36,6 +37,7 @@ class PhotosController: UICollectionViewController {
             }
         }
  //       cell.photoImageView.image = image[indexPath.item]
+        cell.countLikeLabel.text = String(likes[indexPath.item])
     
         return cell
     }

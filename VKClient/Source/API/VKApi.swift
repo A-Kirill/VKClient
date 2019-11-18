@@ -32,7 +32,8 @@ class VKApi {
                 print(String(bytes: data, encoding: .utf8) ?? "")
             let friend = try! JSONDecoder().decode(FriendResponseWrapped.self, from: data)
             //save data in realm
-            self.saveFriendData(friend.response.items)
+            /*self.*/Database.shared.saveFriendData(friend.response.items)
+            
             completion(friend.response.items)
         }
     }
@@ -51,7 +52,7 @@ class VKApi {
             guard let data = response.value else { return }
             let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
             //save data in Realm
-            self.saveGroupsData(groups.response.items)
+            /*self.*/Database.shared.saveGroupsData(groups.response.items)
             
             completion(groups.response.items)
         }
@@ -62,7 +63,8 @@ class VKApi {
         let method = "photos.get"
         let parameters: Parameters = [
             "owner_id": userId,
-            "album_id": "wall", // "wall", "saved", "profile"
+            "album_id": "profile", // "wall", "saved", "profile"
+            "photo_sizes": "0", // 1 - all available sizes photos, 0 - default
             "extended": "1", //additional params(likes,comments...)default 0
             "access_token": Session.instance.token,
             "v": "5.102",
@@ -95,32 +97,32 @@ class VKApi {
     }
     
     //save data in Realm
-    func saveFriendData(_ items: [Friend]) {
-        do {
-            // get access to storage
-            let realm = try Realm()
-            // start change storage
-            realm.beginWrite()
-            // put all objects to storage
-            realm.add(items)
-            // finish all changes
-            try realm.commitWrite()
-        } catch {
-            // if error - print to console
-            print(error)
-        }
-    }
+//    func saveFriendData(_ items: [Friend]) {
+//        do {
+//            // get access to storage
+//            let realm = try Realm()
+//            // start change storage
+//            realm.beginWrite()
+//            // put all objects to storage
+//            realm.add(items)
+//            // finish all changes
+//            try realm.commitWrite()
+//        } catch {
+//            // if error - print to console
+//            print(error)
+//        }
+//    }
     
-    func saveGroupsData(_ items: [Groups]) {
-        do {
-            let realm = try Realm()
-            realm.beginWrite()
-            realm.add(items)
-            try realm.commitWrite()
-        } catch {
-            print(error)
-        }
-    }
+//    func saveGroupsData(_ items: [Groups]) {
+//        do {
+//            let realm = try Realm()
+//            realm.beginWrite()
+//            realm.add(items)
+//            try realm.commitWrite()
+//        } catch {
+//            print(error)
+//        }
+//    }
     
     // Generic
     //    func fetchRequest<T: Decodable>(url: String, params: [String: Any], completionHandler: @escaping (T) -> ()) {

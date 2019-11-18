@@ -9,11 +9,6 @@
 import UIKit
 import RealmSwift
 
-struct User {
-    var name = String()
-    var avatar: UIImage?
-    var photo: [UIImage?]
-}
 
 class FriendResponseWrapped: Decodable {
     let response: FriendResponse
@@ -45,4 +40,15 @@ class Friend: Object, Decodable {
         self.lastName = try values.decode(String.self, forKey: .lastName)
         self.photo = try values.decode(String.self, forKey: .photo)
     }
+    
+//    override class func primaryKey() -> String? {
+//        return "id"
+//    }
+}
+
+//model for 1st course:
+struct User {
+    var name = String()
+    var avatar: UIImage?
+    var photo: [UIImage?]
 }

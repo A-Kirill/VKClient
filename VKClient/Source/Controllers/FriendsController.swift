@@ -19,14 +19,23 @@ class FriendsController: UITableViewController {
 //    ]
     let vkApi = VKApi()
     var allFriends = [Friend]()
+    var selectedUserPhoto = [PhotoItem]()
+    var urlsChosenFriends = [String]()
+    var photosLike = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        animateList()
         
-        vkApi.getFriends(){ [weak self] allFriends in
-            self?.allFriends = allFriends
-            self?.tableView.reloadData()
-        }
+        // 1) request data from Realm
+        self.allFriends = Database.shared.getRealmFriends()
+        self.tableView.reloadData()
+        
+        // 2) Or from web
+//        vkApi.getFriends(){ [weak self] allFriends in
+//            self?.allFriends = allFriends
+//            self?.tableView.reloadData()
+//        }
     }
     
     
@@ -106,6 +115,21 @@ class FriendsController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = tableView.indexPathForSelectedRow?.section ?? 0
+        let selectedUser = allFriends[index]
+        vkApi.getUserPhoto(for: "\(selectedUser.id)"){ [weak self] selectedUserPhoto in
+            self?.selectedUserPhoto = selectedUserPhoto
+            self?.urlsChosenFriends = []
+            for i in selectedUserPhoto {
+                self?.photosLike.append(i.likes.count)
+                for j in i.sizes {
+                    if j.type == "x" {
+                        self?.urlsChosenFriends.append(j.url)
+                    }
+                }
+            }
+        }
+        print(urlsChosenFriends)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -119,17 +143,10 @@ class FriendsController: UITableViewController {
             if allFriends.count > index {
                 let chosenFriend = allFriends[index]
                 print(chosenFriend.id)
-                vkApi.getUserPhoto(for: "\(chosenFriend.id)"){ photosFriend in
-                    destinationController.photosFriend = photosFriend
-                    //just for printing urls in consol
-                    for i in photosFriend {
-                        for j in i.sizes {
-//                            print(j.url)
-                            destinationController.urlChosenFriends.append(j.url)
-                        }
-                    }
-                }
+
                 destinationController.navigationItem.title = chosenFriend.firstName + " photos"
+                destinationController.urlChosenFriends = urlsChosenFriends
+                destinationController.likes = photosLike
                 
 //                destinationController.image = friend.photo
 //                destinationController.navigationItem.title = friend.firstName

@@ -94,8 +94,8 @@ class Groups: Object, Decodable {
 //        }
 //}
 
-//model for 1st course:
-struct Group {
-    var name = String()
-    var logo : UIImage?
-}
+
+//struct Group {
+//    var name = String()
+//    var logo : UIImage?
+//}

@@ -63,7 +63,7 @@ class PhotoItem: Codable {
 
 class Comments: Codable {
     let count: Int
-    
+
     init(count: Int) {
         self.count = count
     }
@@ -71,12 +71,12 @@ class Comments: Codable {
 
 class Likes: Codable {
     let userLikes, count: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case userLikes = "user_likes"
         case count
     }
-    
+
     init(userLikes: Int, count: Int) {
         self.userLikes = userLikes
         self.count = count
@@ -87,7 +87,7 @@ class Size: Codable {
     let type: String
     let url: String
     let width, height: Int
-    
+
     init(type: String, url: String, width: Int, height: Int) {
         self.type = type
         self.url = url
@@ -111,7 +111,8 @@ class Size: Codable {
 //    @objc dynamic var id: Int = 0
 //    @objc dynamic var albumID: Int = 0
 //    @objc dynamic var ownerID: Int = 0
-//    var sizes: [Size]
+//    var sizes = List<Size>()
+//
 //    var text: String
 //    var date: Int
 //    var likes: Likes
