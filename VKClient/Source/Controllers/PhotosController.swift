@@ -16,6 +16,11 @@ class PhotosController: UICollectionViewController {
     var photosFriend = [PhotoItem]()
     var urlChosenFriends = [String]()
     var likes = [Int]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+            
+    }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items

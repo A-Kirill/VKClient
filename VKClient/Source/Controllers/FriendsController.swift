@@ -10,13 +10,6 @@ import UIKit
 
 class FriendsController: UITableViewController {
     
-//    var allFriends: [User] = [
-//        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
-//        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
-//        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
-//        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
-//        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
-//    ]
     let vkApi = VKApi()
     var allFriends = [Friend]()
     var selectedUserPhoto = [PhotoItem]()
@@ -30,12 +23,11 @@ class FriendsController: UITableViewController {
         // 1) request data from Realm
         self.allFriends = Database.shared.getRealmFriends()
         self.tableView.reloadData()
-        
         // 2) Or from web
-//        vkApi.getFriends(){ [weak self] allFriends in
-//            self?.allFriends = allFriends
-//            self?.tableView.reloadData()
-//        }
+        vkApi.getFriends(){ [weak self] allFriends in
+            self?.allFriends = allFriends
+            self?.tableView.reloadData()
+        }
     }
     
     
@@ -153,6 +145,15 @@ class FriendsController: UITableViewController {
             }
         }
     }
+    
+    // for course 1
+    //    var allFriends: [User] = [
+    //        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
+    //        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
+    //        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
+    //        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
+    //        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
+    //    ]
 }
 
 extension String {

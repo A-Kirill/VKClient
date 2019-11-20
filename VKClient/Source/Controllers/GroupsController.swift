@@ -34,10 +34,10 @@ class GroupsController: UITableViewController {
         self.allGroups = Database.shared.getRealmGroups()
         self.tableView.reloadData()
         // 2) Or from web
-//        vkApi.getUserGroups(){ [weak self] allGroups in
-//            self?.allGroups = allGroups
-//            self?.tableView.reloadData()
-//        }
+        vkApi.getUserGroups(){ [weak self] allGroups in
+            self?.allGroups = allGroups
+            self?.tableView.reloadData()
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

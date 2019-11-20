@@ -10,7 +10,7 @@ import UIKit
 
 class PhotoCell: UICollectionViewCell {
     
-    var count = 7
+    var count = 0
     
     @IBOutlet weak var photoImageView: UIImageView!
     
