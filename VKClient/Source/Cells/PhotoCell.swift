@@ -9,7 +9,7 @@
 import UIKit
 
 class PhotoCell: UICollectionViewCell {
-    
+
     var count = 0
     
     @IBOutlet weak var photoImageView: UIImageView!
@@ -17,6 +17,8 @@ class PhotoCell: UICollectionViewCell {
     @IBOutlet weak var countLikeLabel: UILabel!
     
     @IBAction func likeButton(_ sender: UIButton) {
+        
+        let count = Int(self.countLikeLabel.text ?? "")
         
         // animate views and labels
         UIView.animate(withDuration: 0.2,
@@ -36,14 +38,14 @@ class PhotoCell: UICollectionViewCell {
                               duration: 0.6,
                               options: .transitionFlipFromBottom,
                               animations: {
-                                self.countLikeLabel.text = String(self.count)
+                                self.countLikeLabel.text = String(count! - 1)
             })
         } else {
             UIView.transition(with: countLikeLabel,
                               duration: 0.6,
                               options: .transitionFlipFromBottom,
                               animations: {
-                                self.countLikeLabel.text = String(self.count + 1)
+                                self.countLikeLabel.text = String(count! + 1)
             })
         }
     }

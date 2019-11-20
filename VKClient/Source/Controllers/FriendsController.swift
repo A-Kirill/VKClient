@@ -12,9 +12,6 @@ class FriendsController: UITableViewController {
     
     let vkApi = VKApi()
     var allFriends = [Friend]()
-    var selectedUserPhoto = [PhotoItem]()
-    var urlsChosenFriends = [String]()
-    var photosLike = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,21 +104,6 @@ class FriendsController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let index = tableView.indexPathForSelectedRow?.section ?? 0
-        let selectedUser = allFriends[index]
-        vkApi.getUserPhoto(for: "\(selectedUser.id)"){ [weak self] selectedUserPhoto in
-            self?.selectedUserPhoto = selectedUserPhoto
-            self?.urlsChosenFriends = []
-            for i in selectedUserPhoto {
-                self?.photosLike.append(i.likes.count)
-                for j in i.sizes {
-                    if j.type == "x" {
-                        self?.urlsChosenFriends.append(j.url)
-                    }
-                }
-            }
-        }
-        print(urlsChosenFriends)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -136,12 +118,10 @@ class FriendsController: UITableViewController {
                 let chosenFriend = allFriends[index]
                 print(chosenFriend.id)
 
+                destinationController.selectedUserId = chosenFriend.id
                 destinationController.navigationItem.title = chosenFriend.firstName + " photos"
-                destinationController.urlChosenFriends = urlsChosenFriends
-                destinationController.likes = photosLike
-                
+
 //                destinationController.image = friend.photo
-//                destinationController.navigationItem.title = friend.firstName
             }
         }
     }
