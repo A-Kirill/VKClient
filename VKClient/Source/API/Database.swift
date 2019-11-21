@@ -31,7 +31,7 @@ class Database {
         let realm = try! Realm()
         
         try? realm.write {
-            realm.add(items)
+            realm.add(items, update: .modified)
         }
     }
 
@@ -44,17 +44,10 @@ class Database {
     
     func getRealmGroups() -> [Groups] {
         let realm = try! Realm()
-        
+
         let groupsRealm = realm.objects(Groups.self)
         return Array(groupsRealm)
     }
-    
-//    func getRealmGroups() {
-//        let realm = try! Realm()
-//
-//        let groupsRealm = realm.objects(Groups.self)
-//        self.allGroups = Array(groupsRealm)
-//    }
     
     func clearRealm() {
         let realm = try! Realm()

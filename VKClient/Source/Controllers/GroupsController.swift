@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class GroupsController: UITableViewController {
     
     let vkApi = VKApi()
     var allGroups = [Groups]()
+    var allGroupsRealm: Results<Groups>?
+    
+    var token: NotificationToken?
     
     @IBAction func addGroups(segue: UIStoryboardSegue) {
         if segue.identifier == "addGroup" {
@@ -25,19 +29,35 @@ class GroupsController: UITableViewController {
             }
         }
     }
-   
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 1) request data from Realm
         self.allGroups = Database.shared.getRealmGroups()
-        self.tableView.reloadData()
         // 2) Or from web
         vkApi.getUserGroups(){ [weak self] allGroups in
             self?.allGroups = allGroups
             self?.tableView.reloadData()
         }
+        
+        //subscribing on changes
+        token = allGroupsRealm?.observe { changes in
+            switch changes {
+            case .error: print("error")
+            case .initial(let results): print(results)
+            case let .update(results, indexesDelete, indexesInsert, indexesModifications):
+                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
+                self.deleteInTable(indexPath: indexesDelete.map { IndexPath(row: $0, section: 0)})
+                self.updateInTable(indexPath: indexesModifications.map { IndexPath(row: $0, section: 0)})
+                print(results)
+                print(indexesDelete)
+                print(indexesInsert)
+                print(indexesModifications)
+            }
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,7 +68,6 @@ class GroupsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
 
-//        cell.groupImageView?.image = allGroups[indexPath.row].logo
         cell.nameLabel.text = allGroups[indexPath.row].name
 
         if let imageURL = URL(string: allGroups[indexPath.row].photo50) {
@@ -79,5 +98,23 @@ class GroupsController: UITableViewController {
             allGroups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    func insertInTable(indexPath: [IndexPath]){
+        tableView.beginUpdates()
+        tableView.insertRows(at: indexPath, with: .none)
+        tableView.endUpdates()
+    }
+    
+    func deleteInTable(indexPath: [IndexPath]){
+        tableView.beginUpdates()
+        tableView.deleteRows(at: indexPath, with: .none)
+        tableView.endUpdates()
+    }
+    
+    func updateInTable(indexPath: [IndexPath]){
+        tableView.beginUpdates()
+        tableView.reloadRows(at: indexPath, with: .none)
+        tableView.endUpdates()
     }
 }
