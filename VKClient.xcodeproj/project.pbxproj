@@ -31,7 +31,7 @@
 		058719132332BD18006F00D5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058719122332BD18006F00D5 /* User.swift */; };
 		058719152332BD28006F00D5 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058719142332BD28006F00D5 /* Group.swift */; };
 		058719172332C6D2006F00D5 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058719162332C6D2006F00D5 /* FriendCell.swift */; };
-		059C459C238A877100B87ECB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 059C459B238A877100B87ECB /* GoogleService-Info.plist */; };
+		059C45A0238AB72600B87ECB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 059C459F238AB72600B87ECB /* GoogleService-Info.plist */; };
 		05A11C4B234E40F1009615B4 /* CustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A11C4A234E40F1009615B4 /* CustomSegue.swift */; };
 		05A11C4E234E5040009615B4 /* PushTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A11C4D234E5040009615B4 /* PushTransitionAnimator.swift */; };
 		05A11C50234E6399009615B4 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A11C4F234E6399009615B4 /* CustomNavigationController.swift */; };
@@ -68,7 +68,7 @@
 		058719122332BD18006F00D5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		058719142332BD28006F00D5 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		058719162332C6D2006F00D5 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
-		059C459B238A877100B87ECB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		059C459F238AB72600B87ECB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		05A11C4A234E40F1009615B4 /* CustomSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegue.swift; sourceTree = "<group>"; };
 		05A11C4D234E5040009615B4 /* PushTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTransitionAnimator.swift; sourceTree = "<group>"; };
 		05A11C4F234E6399009615B4 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
@@ -171,8 +171,8 @@
 				058719112332BCE9006F00D5 /* Model */,
 				050BF004232D577E00DE18D8 /* Resource */,
 				050BF005232D57A300DE18D8 /* Source */,
-				059C459B238A877100B87ECB /* GoogleService-Info.plist */,
 				056ABC64232832CC00077607 /* Info.plist */,
+				059C459F238AB72600B87ECB /* GoogleService-Info.plist */,
 			);
 			path = VKClient;
 			sourceTree = "<group>";
@@ -302,7 +302,7 @@
 			files = (
 				056ABC63232832CC00077607 /* LaunchScreen.storyboard in Resources */,
 				056ABC60232832CC00077607 /* Assets.xcassets in Resources */,
-				059C459C238A877100B87ECB /* GoogleService-Info.plist in Resources */,
+				059C45A0238AB72600B87ECB /* GoogleService-Info.plist in Resources */,
 				052ED7232341364200623AD1 /* NewsCell.xib in Resources */,
 				056ABC5E232832CA00077607 /* Main.storyboard in Resources */,
 			);
@@ -530,6 +530,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2Q8CDQHFHQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = VKClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -549,6 +553,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2Q8CDQHFHQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = VKClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
