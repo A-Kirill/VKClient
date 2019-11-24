@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+//import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }*/
         
         //Migration block for Realm
-        let config = Realm.Configuration(/*encryptionKey: key,*/ schemaVersion: 2 )
+        let config = Realm.Configuration(/*encryptionKey: key,*/ schemaVersion: 3 )
         Realm.Configuration.defaultConfiguration = config
         
         //Show start screen if we have token

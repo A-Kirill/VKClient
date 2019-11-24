@@ -13,7 +13,7 @@ class GroupsController: UITableViewController {
     
     let vkApi = VKApi()
     var allGroups = [Groups]()
-    var allGroupsRealm: Results<Groups>?
+    var allGroupsRealm: Results<Groups>!
     
     var token: NotificationToken?
     
@@ -33,14 +33,16 @@ class GroupsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // 1) request data from Realm
-        self.allGroups = Database.shared.getRealmGroups()
+        allGroupsRealm = Database.shared.getRealmGroups()
+//        self.allGroups = Database.shared.getRealmGroups()
         // 2) Or from web
-        vkApi.getUserGroups(){ [weak self] allGroups in
-            self?.allGroups = allGroups
-            self?.tableView.reloadData()
-        }
+        vkApi.getUserGroups(){ allGroups in }
+//        vkApi.getUserGroups(){ [weak self] allGroups in
+//            self?.allGroups = allGroups
+//            self?.tableView.reloadData()
+//        }
         
         //subscribing on changes
         token = allGroupsRealm?.observe { changes in
@@ -48,29 +50,30 @@ class GroupsController: UITableViewController {
             case .error: print("error")
             case .initial(let results): print(results)
             case let .update(results, indexesDelete, indexesInsert, indexesModifications):
-                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
-                self.deleteInTable(indexPath: indexesDelete.map { IndexPath(row: $0, section: 0)})
-                self.updateInTable(indexPath: indexesModifications.map { IndexPath(row: $0, section: 0)})
-                print(results)
-                print(indexesDelete)
-                print(indexesInsert)
-                print(indexesModifications)
+                self.tableView.reloadData()
+//                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
+//                self.deleteInTable(indexPath: indexesDelete.map { IndexPath(row: $0, section: 0)})
+//                self.updateInTable(indexPath: indexesModifications.map { IndexPath(row: $0, section: 0)})
+//                print(results)
+//                print(indexesDelete)
+//                print(indexesInsert)
+//                print(indexesModifications)
             }
         }
 
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allGroups.count
+        return allGroupsRealm.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
 
-        cell.nameLabel.text = allGroups[indexPath.row].name
+        cell.nameLabel.text = allGroupsRealm[indexPath.row].name
 
-        if let imageURL = URL(string: allGroups[indexPath.row].photo50) {
+        if let imageURL = URL(string: allGroupsRealm[indexPath.row].photo50) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
                 if let data = data {

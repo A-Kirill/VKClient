@@ -12,22 +12,26 @@ import RealmSwift
 class FriendsController: UITableViewController {
     
     let vkApi = VKApi()
-    var allFriends = [Friend]()
-    var allFriendsRealm: Results<Friend>?
+//    var allFriends = [Friend]()
+    var allFriendsRealm: Results<Friend>!
     
     var token: NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // 1) request data from Realm
+        allFriendsRealm = Database.shared.getRealmFriends()
+//        self.allFriends = Database.shared.getRealmFriends()
+        
         animateList()
         
-        // 1) request data from Realm
-        self.allFriends = Database.shared.getRealmFriends()
         // 2) Or from web
-        vkApi.getFriends(){ [weak self] allFriends in
-            self?.allFriends = allFriends
-            self?.tableView.reloadData()
-        }
+        vkApi.getFriends(){ allFriends in }
+//        vkApi.getFriends(){ [weak self] allFriends in
+//            self?.allFriends = allFriends
+//            self?.tableView.reloadData()
+//        }
         
         //subscribing on changes
         token = allFriendsRealm?.observe { changes in
@@ -35,13 +39,14 @@ class FriendsController: UITableViewController {
             case .error: print("error")
             case .initial(let results): print(results)
             case let .update(results, indexesDelete, indexesInsert, indexesModifications):
-                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
-                self.deleteInTable(indexPath: indexesDelete.map { IndexPath(row: $0, section: 0)})
-                self.updateInTable(indexPath: indexesModifications.map { IndexPath(row: $0, section: 0)})
-                print(results)
-                print(indexesDelete)
-                print(indexesInsert)
-                print(indexesModifications)
+                self.tableView.reloadData()
+//                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
+//                self.deleteInTable(indexPath: indexesDelete.map { IndexPath(row: $0, section: 0)})
+//                self.updateInTable(indexPath: indexesModifications.map { IndexPath(row: $0, section: 0)})
+//                print(results)
+//                print(indexesDelete)
+//                print(indexesInsert)
+//                print(indexesModifications)
             }
         }
     }
@@ -112,7 +117,7 @@ class FriendsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
  //       return 1
-        return allFriends.count
+        return allFriendsRealm.count
     }
     
     
@@ -121,10 +126,10 @@ class FriendsController: UITableViewController {
 
 //        cell.friendNameLabel.text = allFriends[indexPath.section].name
        // cell.friendImageView?.image = allFriends[indexPath.section].avatar
-        cell.friendNameLabel.text = allFriends[indexPath.row/*section*/].firstName + " " + allFriends[indexPath.row/*section*/].lastName
+        cell.friendNameLabel.text = allFriendsRealm[indexPath.row/*section*/].firstName + " " + allFriendsRealm[indexPath.row/*section*/].lastName
         
         //String URL to UIImage
-        if let imageURL = URL(string: allFriends[indexPath.row/*section*/].photo) {
+        if let imageURL = URL(string: allFriendsRealm[indexPath.row/*section*/].photo) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
                 if let data = data {
@@ -151,8 +156,8 @@ class FriendsController: UITableViewController {
             guard let destinationController = segue.destination as? PhotosController else {return}
             
             let index = tableView.indexPathForSelectedRow?.row/*section*/ ?? 0
-            if allFriends.count > index {
-                let chosenFriend = allFriends[index]
+            if allFriendsRealm.count > index {
+                let chosenFriend = allFriendsRealm[index]
                 print(chosenFriend.id)
 
                 destinationController.selectedUserId = chosenFriend.id

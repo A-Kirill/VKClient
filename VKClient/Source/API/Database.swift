@@ -35,19 +35,30 @@ class Database {
         }
     }
 
-    func getRealmFriends() -> [Friend] {
+    func getRealmFriends() -> Results<Friend> {
         let realm = try! Realm()
         
-        let friendsRealm = realm.objects(Friend.self)
-        return Array(friendsRealm)
+        return realm.objects(Friend.self)
     }
     
-    func getRealmGroups() -> [Groups] {
+    func getRealmGroups() -> Results<Groups> {
         let realm = try! Realm()
-
-        let groupsRealm = realm.objects(Groups.self)
-        return Array(groupsRealm)
+        
+        return realm.objects(Groups.self)
     }
+//    func getRealmFriends() -> [Friend] {
+//        let realm = try! Realm()
+//
+//        let friendsRealm = realm.objects(Friend.self)
+//        return Array(friendsRealm)
+//    }
+    
+//    func getRealmGroups() -> [Groups] {
+//        let realm = try! Realm()
+//
+//        let groupsRealm = realm.objects(Groups.self)
+//        return Array(groupsRealm)
+//    }
     
     func clearRealm() {
         let realm = try! Realm()
@@ -56,18 +67,4 @@ class Database {
             realm.deleteAll()
         }
     }
-    
-//    func addUser(object: Friend) {
-//        let realm = try! Realm()
-//
-//        try? realm.write {
-//            realm.add(object)
-//        }
-//    }
-    
-//    func getUser(id: Int) -> Friend? {
-//        let realm = try! Realm()
-//        
-//        return realm.objects(Friend.self).first
-//    }
 }
