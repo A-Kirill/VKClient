@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-//import Firebase
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-  //      FirebaseApp.configure()
+        FirebaseApp.configure()
         
         //creating secret key... Its necessary to save it secure!!! (examp: Keychain)
        /* var key = Data(count: 64)
@@ -48,6 +48,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let contentScreen = storyBoard.instantiateViewController(withIdentifier: "MainScreen")
             window?.rootViewController = contentScreen
         }
+        
+        //Fribase test:
+//        window = UIWindow(frame: CGRect(x: 0,
+//                                        y: 0,
+//                                        width: UIScreen.main.bounds.width,
+//                                        height: UIScreen.main.bounds.height))
+//        
+//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+//        let contentScreen = storyBoard.instantiateViewController(withIdentifier: "MainScreen")
+//        window?.rootViewController = contentScreen
         
         // UserDefaults
         let isAuthorized = UserDefaults.standard.bool(forKey: "isAuthorized")

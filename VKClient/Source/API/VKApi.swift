@@ -30,11 +30,10 @@ class VKApi {
             guard let data = response.value,
             let friend = try? JSONDecoder().decode(FriendResponseWrapped.self, from: data)
             else { return }
-                print(String(bytes: data, encoding: .utf8) ?? "")
+//                print(String(bytes: data, encoding: .utf8) ?? "")
             
             //save data in realm
-            /*self.*/Database.shared.saveFriendData(friend.response.items)
-            
+            /*self.*/DatabaseRealm.shared.saveFriendData(friend.response.items)
             completion(friend.response.items)
         }
     }
@@ -53,7 +52,7 @@ class VKApi {
             guard let data = response.value else { return }
             let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
             //save data in Realm
-            /*self.*/Database.shared.saveGroupsData(groups.response.items)
+            /*self.*/DatabaseRealm.shared.saveGroupsData(groups.response.items)
             
             completion(groups.response.items)
         }
@@ -75,7 +74,7 @@ class VKApi {
             guard let data = response.value,
             let photos = try? JSONDecoder().decode(Photo.self, from: data)
             else { return }
-//            print(String(bytes: data, encoding: .utf8) ?? "")            
+//            print(String(bytes: data, encoding: .utf8) ?? "")
             completion(photos.response.items)
         }
     }

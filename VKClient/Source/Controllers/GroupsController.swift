@@ -35,7 +35,7 @@ class GroupsController: UITableViewController {
         super.viewDidLoad()
 
         // 1) request data from Realm
-        allGroupsRealm = Database.shared.getRealmGroups()
+        allGroupsRealm = DatabaseRealm.shared.getRealmGroups()
 //        self.allGroups = Database.shared.getRealmGroups()
         // 2) Or from web
         vkApi.getUserGroups(){ allGroups in }
