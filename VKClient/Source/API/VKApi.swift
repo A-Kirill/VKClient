@@ -33,7 +33,7 @@ class VKApi {
 //                print(String(bytes: data, encoding: .utf8) ?? "")
             
             //save data in realm
-            /*self.*/DatabaseRealm.shared.saveFriendData(friend.response.items)
+            DatabaseRealm.shared.saveFriendData(friend.response.items)
             completion(friend.response.items)
         }
     }
@@ -52,7 +52,7 @@ class VKApi {
             guard let data = response.value else { return }
             let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
             //save data in Realm
-            /*self.*/DatabaseRealm.shared.saveGroupsData(groups.response.items)
+            DatabaseRealm.shared.saveGroupsData(groups.response.items)
             
             completion(groups.response.items)
         }
@@ -94,6 +94,24 @@ class VKApi {
             guard let data = response.value else { return }
             let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
             completion(groups.response.items)
+        }
+    }
+    
+    //get News
+    func getUserNews(completion: @escaping ([NewsModel]) -> Void ) {
+        let method = "newsfeed.get"
+        let parameters: Parameters = [
+            "filters": "post",
+            "count": "20",
+            "access_token": Session.instance.token,
+            "v": "5.103"
+        ]
+        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
+            guard let data = response.value,
+                let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data)
+                else { return }
+                print(String(bytes: data, encoding: .utf8) ?? "")
+            completion(news.response.items)
         }
     }
     

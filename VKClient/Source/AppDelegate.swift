@@ -49,16 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = contentScreen
         }
         
-        //Fribase test:
-//        window = UIWindow(frame: CGRect(x: 0,
-//                                        y: 0,
-//                                        width: UIScreen.main.bounds.width,
-//                                        height: UIScreen.main.bounds.height))
-//        
-//        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//        let contentScreen = storyBoard.instantiateViewController(withIdentifier: "MainScreen")
-//        window?.rootViewController = contentScreen
-        
         // UserDefaults
         let isAuthorized = UserDefaults.standard.bool(forKey: "isAuthorized")
         print(isAuthorized)
