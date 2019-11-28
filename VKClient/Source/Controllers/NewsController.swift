@@ -24,7 +24,8 @@ class NewsController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "newsIdentifier")
-        
+
+        //request news
         vkApi.getUserNews() { [weak self] allUserNews in
             self?.allUserNews = allUserNews
             self?.tableView.reloadData()

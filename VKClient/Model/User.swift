@@ -41,9 +41,9 @@ class Friend: Object, Decodable {
         self.photo = try values.decode(String.self, forKey: .photo)
     }
     
-//    override class func primaryKey() -> String? {
-//        return "id"
-//    }
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 //model for 1st course:

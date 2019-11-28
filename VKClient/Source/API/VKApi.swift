@@ -97,7 +97,7 @@ class VKApi {
         }
     }
     
-    //get News
+    //get News:
     func getUserNews(completion: @escaping ([NewsModel]) -> Void ) {
         let method = "newsfeed.get"
         let parameters: Parameters = [

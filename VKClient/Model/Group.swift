@@ -39,9 +39,9 @@ class Groups: Object, Decodable {
             case isAdvertiser = "is_advertiser"
             case photo50 = "photo_50"
         }
-//    override class func primaryKey() -> String? {
-//        return "id"
-//    }
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }
 //    class GroupResponseWrapped: Codable {
 //        let response: GroupResponse
