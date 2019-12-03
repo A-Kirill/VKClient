@@ -18,7 +18,7 @@ class DatabaseRealm {
             // start change storage
             realm.beginWrite()
             // put all objects to storage
-            realm.add(items)
+            realm.add(items, update: .modified)
             // finish all changes
             try realm.commitWrite()
         } catch {

@@ -102,46 +102,20 @@ class VKApi {
         let method = "newsfeed.get"
         let parameters: Parameters = [
             "filters": "post",
-            "count": "20",
+            "count": "5",
             "access_token": Session.instance.token,
             "v": "5.103"
         ]
         Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
             guard let data = response.value,
-                let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data)
-                else { return }
-                print(String(bytes: data, encoding: .utf8) ?? "")
+                let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
+                    let result = String(bytes: response.value!, encoding: .utf8)
+                    print(result)
+                    return
+            }
             completion(news.response.items)
         }
     }
-    
-    //save data in Realm
-//    func saveFriendData(_ items: [Friend]) {
-//        do {
-//            // get access to storage
-//            let realm = try Realm()
-//            // start change storage
-//            realm.beginWrite()
-//            // put all objects to storage
-//            realm.add(items)
-//            // finish all changes
-//            try realm.commitWrite()
-//        } catch {
-//            // if error - print to console
-//            print(error)
-//        }
-//    }
-    
-//    func saveGroupsData(_ items: [Groups]) {
-//        do {
-//            let realm = try Realm()
-//            realm.beginWrite()
-//            realm.add(items)
-//            try realm.commitWrite()
-//        } catch {
-//            print(error)
-//        }
-//    }
     
     // Generic
     //    func fetchRequest<T: Decodable>(url: String, params: [String: Any], completionHandler: @escaping (T) -> ()) {
@@ -152,69 +126,6 @@ class VKApi {
     //            } catch {
     //                print("error parsing JSON")
     //            }
-    //        }
-    //    }
-    
-    //    func getFriends() {
-    //        let method = "friends.get"
-    //        let parameters: Parameters = [
-    //            "user_id": Session.instance.userId,
-    //            "order": "name",
-    //            "fields": "domain",
-    //            "access_token": Session.instance.token,
-    //            "v": "5.102"
-    //        ]
-    //
-    //        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-    //            print("__________________ Friends List __________________")
-    //            print(response.value ?? "")
-    //        }
-    //    }
-    //
-    //    func getUserGroups() {
-    //        let method = "groups.get"
-    //        let parameters: Parameters = [
-    //            "user_id": Session.instance.userId,
-    //            "extended": "0", //1-full information about groups, 0 - default(only IDs)
-    //            "access_token": Session.instance.token,
-    //            "v": "5.102"
-    //        ]
-    //
-    //        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-    //            print("__________________ User Groups __________________ ")
-    //            print(response.value ?? "")
-    //        }
-    //    }
-    //
-    //    func getUserPhoto() {
-    //        let method = "photos.get"
-    //        let parameters: Parameters = [
-    //            "owner_id": Session.instance.userId,
-    //            "album_id": "profile", // "wall", "saved"
-    //            "extended": "1", //if its group's photos should add "-1"
-    //            "access_token": Session.instance.token,
-    //            "v": "5.102"
-    //        ]
-    //
-    //        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-    //            print("__________________ User Photos __________________")
-    //            print(response.value ?? "")
-    //        }
-    //    }
-    //
-    //    func getSearchedGroup(for keyword: String) {
-    //        let method = "groups.search"
-    //        let parameters: Parameters = [
-    //            "q": keyword,
-    //            "type": "group",    // "page", "event"
-    //            "sort": "0", // "2" sort for max amount followers
-    //            "access_token": Session.instance.token,
-    //            "v": "5.102"
-    //        ]
-    //
-    //        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseJSON { response in
-    //            print("__________________ Searched Groups __________________")
-    //            print(response.value ?? "" )
     //        }
     //    }
 }

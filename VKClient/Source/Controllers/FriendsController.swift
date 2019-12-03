@@ -44,7 +44,6 @@ class FriendsController: UITableViewController {
 
         // 1) request data from Realm
         allFriendsRealm = DatabaseRealm.shared.getRealmFriends()
-//        self.allFriends = Database.shared.getRealmFriends()
         
         animateList()
         
@@ -59,7 +58,9 @@ class FriendsController: UITableViewController {
         token = allFriendsRealm?.observe { changes in
             switch changes {
             case .error: print("error")
-            case .initial(let results): print(results)
+            case .initial(let results):
+                self.tableView.reloadData()
+                print(results)
             case let .update(results, indexesDelete, indexesInsert, indexesModifications):
                 self.tableView.reloadData()
 //                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
@@ -127,15 +128,6 @@ class FriendsController: UITableViewController {
     
     // MARK: - Table view data source
 
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return String(allFriends[section].name[0])
-//    }
-    
-    
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return allFriends.count
-//    }
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
  //       return 1
@@ -146,12 +138,10 @@ class FriendsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell", for: indexPath) as! FriendCell
 
-//        cell.friendNameLabel.text = allFriends[indexPath.section].name
-       // cell.friendImageView?.image = allFriends[indexPath.section].avatar
-        cell.friendNameLabel.text = allFriendsRealm[indexPath.row/*section*/].firstName + " " + allFriendsRealm[indexPath.row/*section*/].lastName
+        cell.friendNameLabel.text = allFriendsRealm[indexPath.row].firstName + " " + allFriendsRealm[indexPath.row].lastName
         
         //String URL to UIImage
-        if let imageURL = URL(string: allFriendsRealm[indexPath.row/*section*/].photo) {
+        if let imageURL = URL(string: allFriendsRealm[indexPath.row].photo) {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: imageURL)
                 if let data = data {
@@ -177,15 +167,13 @@ class FriendsController: UITableViewController {
         if segue.identifier == "photosSegue" {
             guard let destinationController = segue.destination as? PhotosController else {return}
             
-            let index = tableView.indexPathForSelectedRow?.row/*section*/ ?? 0
+            let index = tableView.indexPathForSelectedRow?.row ?? 0
             if allFriendsRealm.count > index {
                 let chosenFriend = allFriendsRealm[index]
                 print(chosenFriend.id)
 
                 destinationController.selectedUserId = chosenFriend.id
                 destinationController.navigationItem.title = chosenFriend.firstName + " photos"
-
-//                destinationController.image = friend.photo
             }
         }
     }

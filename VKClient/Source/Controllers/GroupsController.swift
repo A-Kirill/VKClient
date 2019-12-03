@@ -36,7 +36,6 @@ class GroupsController: UITableViewController {
 
         // 1) request data from Realm
         allGroupsRealm = DatabaseRealm.shared.getRealmGroups()
-//        self.allGroups = Database.shared.getRealmGroups()
         // 2) Or from web
         vkApi.getUserGroups(){ allGroups in }
 //        vkApi.getUserGroups(){ [weak self] allGroups in
@@ -48,7 +47,9 @@ class GroupsController: UITableViewController {
         token = allGroupsRealm?.observe { changes in
             switch changes {
             case .error: print("error")
-            case .initial(let results): print(results)
+            case .initial(let results):
+                self.tableView.reloadData()
+//                print(results)
             case let .update(results, indexesDelete, indexesInsert, indexesModifications):
                 self.tableView.reloadData()
 //                self.insertInTable(indexPath: indexesInsert.map { IndexPath(row: $0, section: 0)})
