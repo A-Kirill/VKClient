@@ -98,7 +98,7 @@ class VKApi {
     }
     
     //get News:
-    func getUserNews(completion: @escaping ([NewsModel]) -> Void ) {
+    func getUserNews(completion: @escaping (NewsResponse) -> Void ) {
         let method = "newsfeed.get"
         let parameters: Parameters = [
             "filters": "post",
@@ -113,9 +113,27 @@ class VKApi {
                     print(result)
                     return
             }
-            completion(news.response.items)
+            completion(news.response)
         }
     }
+//    func getUserNews(completion: @escaping ([NewsModel]) -> Void ) {
+//        let method = "newsfeed.get"
+//        let parameters: Parameters = [
+//            "filters": "post",
+//            "count": "5",
+//            "access_token": Session.instance.token,
+//            "v": "5.103"
+//        ]
+//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
+//            guard let data = response.value,
+//                let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
+//                    let result = String(bytes: response.value!, encoding: .utf8)
+//                    print(result)
+//                    return
+//            }
+//            completion(news.response.items)
+//        }
+//    }
     
     // Generic
     //    func fetchRequest<T: Decodable>(url: String, params: [String: Any], completionHandler: @escaping (T) -> ()) {

@@ -25,16 +25,16 @@ struct NewsResponse: Decodable {
 }
 
 struct NewsModel: Decodable {
-    let type: String
+    let type: String?
     let sourceID, date: Int
-    let postType, text: String
+    let postType, text: String?
     let markedAsAds: Int
-    let attachments: [Attachment]
-    let postSource: PostSource
-    let comments: CommentsNews
-    let likes: LikesNews
-    let reposts: Reposts
-    let views: Views
+    let attachments: [Attachment]?
+    let postSource: PostSource?
+    let comments: CommentsNews?
+    let likes: LikesNews?
+    let reposts: Reposts?
+    let views: Views?
     let isFavorite: Bool
     let postID: Int
     
@@ -55,11 +55,11 @@ struct NewsModel: Decodable {
 
 struct GroupNews: Decodable {
     let id: Int
-    let name, screenName: String
+    let name, screenName: String?
     let isClosed: Int
-    let type: String
+    let type: String?
     let isAdmin, isMember, isAdvertiser: Int
-    let photo50, photo100, photo200: String
+    let photo50, photo100, photo200: String?
     
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -76,19 +76,19 @@ struct GroupNews: Decodable {
 }
 
 struct Attachment: Decodable {
-    let type: String
-    let doc: Doc
+    let type: String?
+    let doc: Doc?
 }
 
 struct Doc: Decodable {
     let id, ownerID: Int
-    let title: String
+    let title: String?
     let size: Int
-    let ext: String
-    let url: String
+    let ext: String?
+    let url: String?
     let date, type: Int
-    let preview: Preview
-    let accessKey: String
+    let preview: Preview?
+    let accessKey: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -99,8 +99,8 @@ struct Doc: Decodable {
 }
 
 struct Preview: Decodable {
-    let photo: Photo
-    let video: Video
+    let photo: Photo?
+    let video: Video?
 }
 
 struct PhotoNews: Decodable {
@@ -108,7 +108,7 @@ struct PhotoNews: Decodable {
 }
 
 struct Video: Decodable {
-    let src: String
+    let src: String?
     let width, height: Int
     let type: String?
     let fileSize: Int?
@@ -142,7 +142,7 @@ struct LikesNews: Decodable {
 }
 
 struct PostSource: Decodable {
-    let type: String
+    let type: String?
 }
 
 struct Reposts: Decodable {
@@ -160,13 +160,13 @@ struct Views: Decodable {
 
 struct ProfileNews: Decodable {
     let id: Int
-    let firstName, lastName: String
+    let firstName, lastName: String?
     let isClosed, canAccessClosed: Bool
     let sex: Int
-    let screenName: String
-    let photo50, photo100: String
+    let screenName: String?
+    let photo50, photo100: String?
     let online: Int
-    let onlineInfo: OnlineInfo
+    let onlineInfo: OnlineInfo?
     
     enum CodingKeys: String, CodingKey {
         case id

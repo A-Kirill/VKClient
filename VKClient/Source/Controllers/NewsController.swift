@@ -18,7 +18,8 @@ class NewsController: UITableViewController {
     ]
     
     let vkApi = VKApi()
-    var allUserNews = [NewsModel]()
+    var allUserNews: NewsResponse?
+//    var allUserNews = [NewsModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,6 @@ class NewsController: UITableViewController {
             self?.allUserNews = allUserNews
             self?.tableView.reloadData()
         }
-        print(allUserNews.count)
     }
 
     // MARK: - Table view data source
