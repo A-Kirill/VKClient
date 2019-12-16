@@ -26,17 +26,17 @@ struct NewsResponse: Decodable {
 
 struct NewsModel: Decodable {
     let type: String?
-    let sourceID, date: Int
+    let sourceID, date: Int?
     let postType, text: String?
-    let markedAsAds: Int
+    let markedAsAds: Int?
     let attachments: [Attachment]?
     let postSource: PostSource?
     let comments: CommentsNews?
     let likes: LikesNews?
     let reposts: Reposts?
     let views: Views?
-    let isFavorite: Bool
-    let postID: Int
+    let isFavorite: Bool?
+    let postID: Int?
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -56,9 +56,9 @@ struct NewsModel: Decodable {
 struct GroupNews: Decodable {
     let id: Int
     let name, screenName: String?
-    let isClosed: Int
+    let isClosed: Int?
     let type: String?
-    let isAdmin, isMember, isAdvertiser: Int
+    let isAdmin, isMember, isAdvertiser: Int?
     let photo50, photo100, photo200: String?
     
     enum CodingKeys: String, CodingKey {
@@ -81,7 +81,7 @@ struct Attachment: Decodable {
 }
 
 struct Doc: Decodable {
-    let id, ownerID: Int
+    let id, ownerID: Int?
     let title: String?
     let size: Int
     let ext: String?
@@ -120,8 +120,8 @@ struct Video: Decodable {
 }
 
 struct CommentsNews: Decodable {
-    let count, canPost: Int
-    let groupsCanPost: Bool
+    let count, canPost: Int?
+    let groupsCanPost: Bool?
     
     enum CodingKeys: String, CodingKey {
         case count
@@ -131,7 +131,7 @@ struct CommentsNews: Decodable {
 }
 
 struct LikesNews: Decodable {
-    let count, userLikes, canLike, canPublish: Int
+    let count, userLikes, canLike, canPublish: Int?
     
     enum CodingKeys: String, CodingKey {
         case count
@@ -161,11 +161,11 @@ struct Views: Decodable {
 struct ProfileNews: Decodable {
     let id: Int
     let firstName, lastName: String?
-    let isClosed, canAccessClosed: Bool
+    let isClosed, canAccessClosed: Bool?
     let sex: Int
     let screenName: String?
     let photo50, photo100: String?
-    let online: Int
+    let online: Int?
     let onlineInfo: OnlineInfo?
     
     enum CodingKeys: String, CodingKey {
@@ -185,7 +185,7 @@ struct ProfileNews: Decodable {
 
 struct OnlineInfo: Decodable {
     let visible: Bool
-    let lastSeen: Int
+    let lastSeen: Int?
     let appID: Int?
     let isMobile: Bool?
     
