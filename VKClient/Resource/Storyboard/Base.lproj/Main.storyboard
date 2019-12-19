@@ -361,7 +361,9 @@
         <scene sceneID="uDI-HU-a3I">
             <objects>
                 <navigationController id="4Do-Kb-pHD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News" image="newspaper" id="nhW-gt-ODl"/>
+                    <tabBarItem key="tabBarItem" title="News" image="newspaper" id="nhW-gt-ODl">
+                        <inset key="imageInsets" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7Sv-FL-A02">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -438,7 +440,9 @@
         <scene sceneID="bCv-G4-3qy">
             <objects>
                 <navigationController id="vhB-fW-G4J" customClass="CustomNavigationController" customModule="VKClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Groups" image="team" id="ay4-Lv-cqC"/>
+                    <tabBarItem key="tabBarItem" title="Groups" image="team" id="ay4-Lv-cqC">
+                        <inset key="imageInsets" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RNx-Qy-sJH">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -530,7 +534,9 @@
         <scene sceneID="e4v-sL-tMZ">
             <objects>
                 <navigationController id="ypI-I7-1ws" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="friendship-1" id="xZi-0T-1Vo"/>
+                    <tabBarItem key="tabBarItem" title="Friends" image="friendship-1" id="xZi-0T-1Vo">
+                        <inset key="imageInsets" minX="0.0" minY="3" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rTx-Js-pIR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
