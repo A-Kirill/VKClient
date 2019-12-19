@@ -18,6 +18,7 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
     @IBOutlet weak var counterLabel: UILabel!
+    @IBOutlet weak var viewCounter: UILabel!
     
     @IBAction func presButton(_ sender: UIButton) {
         

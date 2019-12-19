@@ -37,6 +37,8 @@
 		05A11C50234E6399009615B4 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A11C4F234E6399009615B4 /* CustomNavigationController.swift */; };
 		05A11C52234E66D4009615B4 /* PopTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A11C51234E66D4009615B4 /* PopTransitionAnimator.swift */; };
 		05D0757623647A0B0070380C /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D0757523647A0B0070380C /* WebLoginViewController.swift */; };
+		05FB477523AB2F0300504997 /* NewsPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05FB477423AB2F0300504997 /* NewsPhotoCell.xib */; };
+		05FB477723ABDA3D00504997 /* NewsPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FB477623ABDA3D00504997 /* NewsPhotoCell.swift */; };
 		05FF08EB235F8574009EA7B8 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FF08EA235F8574009EA7B8 /* Session.swift */; };
 		5336CBCE104A7CFB06EC8494 /* Pods_VKClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D41FAD3892B94E463C6F97A3 /* Pods_VKClient.framework */; };
 /* End PBXBuildFile section */
@@ -74,6 +76,8 @@
 		05A11C4F234E6399009615B4 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		05A11C51234E66D4009615B4 /* PopTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopTransitionAnimator.swift; sourceTree = "<group>"; };
 		05D0757523647A0B0070380C /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
+		05FB477423AB2F0300504997 /* NewsPhotoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsPhotoCell.xib; sourceTree = "<group>"; };
+		05FB477623ABDA3D00504997 /* NewsPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsPhotoCell.swift; sourceTree = "<group>"; };
 		05FF08EA235F8574009EA7B8 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		D41FAD3892B94E463C6F97A3 /* Pods_VKClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4ADFC453518F86306121F5 /* Pods-VKClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKClient.debug.xcconfig"; path = "Target Support Files/Pods-VKClient/Pods-VKClient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			children = (
 				056ABC5C232832CA00077607 /* Main.storyboard */,
 				052ED7222341364200623AD1 /* NewsCell.xib */,
+				05FB477423AB2F0300504997 /* NewsPhotoCell.xib */,
 				056ABC61232832CC00077607 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
@@ -194,6 +199,7 @@
 				058719162332C6D2006F00D5 /* FriendCell.swift */,
 				0587190F2332B6E3006F00D5 /* PhotoCell.swift */,
 				052ED72423413A2500623AD1 /* NewsCell.swift */,
+				05FB477623ABDA3D00504997 /* NewsPhotoCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -305,6 +311,7 @@
 				059C45A0238AB72600B87ECB /* GoogleService-Info.plist in Resources */,
 				052ED7232341364200623AD1 /* NewsCell.xib in Resources */,
 				056ABC5E232832CA00077607 /* Main.storyboard in Resources */,
+				05FB477523AB2F0300504997 /* NewsPhotoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +369,7 @@
 				05A11C4B234E40F1009615B4 /* CustomSegue.swift in Sources */,
 				05328DA323817F5B00E3512B /* DatabaseRealm.swift in Sources */,
 				05D0757623647A0B0070380C /* WebLoginViewController.swift in Sources */,
+				05FB477723ABDA3D00504997 /* NewsPhotoCell.swift in Sources */,
 				058719172332C6D2006F00D5 /* FriendCell.swift in Sources */,
 				0587190E23329A92006F00D5 /* GroupCell.swift in Sources */,
 				053536D62339CDCD00F6C7C4 /* GradientView.swift in Sources */,
