@@ -19,6 +19,7 @@ class NewsController: UITableViewController {
     
     let vkApi = VKApi()
     var allUserNews: NewsResponse?
+    var photoNews: PhotoNewsResponse?
 //    var allUserNews = [NewsModel]()
 
     override func viewDidLoad() {
@@ -26,9 +27,14 @@ class NewsController: UITableViewController {
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "newsIdentifier")
 
-        //request news
+        //request news post
         vkApi.getUserNews() { [weak self] allUserNews in
             self?.allUserNews = allUserNews
+            self?.tableView.reloadData()
+        }
+        //request news photo
+        vkApi.getPhotoNews() { [weak self] photoNews in
+            self?.photoNews = photoNews
             self?.tableView.reloadData()
         }
     }
