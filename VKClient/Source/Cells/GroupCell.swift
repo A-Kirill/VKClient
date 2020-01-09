@@ -13,6 +13,10 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var groupImageView: UIImageView!
     
+    override func awakeFromNib() {
+        groupImageView.layer.cornerRadius = groupImageView.frame.size.width / 2
+        groupImageView.layer.masksToBounds = true
+    }
     
     override func prepareForReuse() {
             super.prepareForReuse()
