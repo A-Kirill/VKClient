@@ -17,6 +17,10 @@
 		05328DA323817F5B00E3512B /* DatabaseRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05328DA223817F5B00E3512B /* DatabaseRealm.swift */; };
 		053536D62339CDCD00F6C7C4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053536D52339CDCD00F6C7C4 /* GradientView.swift */; };
 		05484E50236A962B00968A1B /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05484E4F236A962B00968A1B /* Photo.swift */; };
+		055079BE23C78748009CA112 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055079BD23C78748009CA112 /* AsyncOperation.swift */; };
+		055079C023C78B23009CA112 /* FetchDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055079BF23C78B23009CA112 /* FetchDataOperation.swift */; };
+		055079C223C82E78009CA112 /* ParseDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055079C123C82E78009CA112 /* ParseDataOperation.swift */; };
+		055079C423C8331C009CA112 /* DisplayDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055079C323C8331C009CA112 /* DisplayDataOperation.swift */; };
 		05694F0D232F5AFB00F28C85 /* FriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05694F0C232F5AFB00F28C85 /* FriendsController.swift */; };
 		05694F0F232F5C7100F28C85 /* GroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05694F0E232F5C7100F28C85 /* GroupsController.swift */; };
 		05694F11232F5D5300F28C85 /* PhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05694F10232F5D5300F28C85 /* PhotosController.swift */; };
@@ -55,6 +59,10 @@
 		05328DA223817F5B00E3512B /* DatabaseRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseRealm.swift; sourceTree = "<group>"; };
 		053536D52339CDCD00F6C7C4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		05484E4F236A962B00968A1B /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		055079BD23C78748009CA112 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		055079BF23C78B23009CA112 /* FetchDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDataOperation.swift; sourceTree = "<group>"; };
+		055079C123C82E78009CA112 /* ParseDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDataOperation.swift; sourceTree = "<group>"; };
+		055079C323C8331C009CA112 /* DisplayDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDataOperation.swift; sourceTree = "<group>"; };
 		05694F0C232F5AFB00F28C85 /* FriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsController.swift; sourceTree = "<group>"; };
 		05694F0E232F5C7100F28C85 /* GroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsController.swift; sourceTree = "<group>"; };
 		05694F10232F5D5300F28C85 /* PhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosController.swift; sourceTree = "<group>"; };
@@ -120,6 +128,7 @@
 		050BF005232D57A300DE18D8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				055079BC23C78672009CA112 /* Operation */,
 				0508F52D237BC6E3004E950B /* API */,
 				05A11C4C234E4227009615B4 /* Animation */,
 				056ABC58232832CA00077607 /* AppDelegate.swift */,
@@ -151,6 +160,17 @@
 				053536D52339CDCD00F6C7C4 /* GradientView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		055079BC23C78672009CA112 /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				055079BD23C78748009CA112 /* AsyncOperation.swift */,
+				055079BF23C78B23009CA112 /* FetchDataOperation.swift */,
+				055079C123C82E78009CA112 /* ParseDataOperation.swift */,
+				055079C323C8331C009CA112 /* DisplayDataOperation.swift */,
+			);
+			path = Operation;
 			sourceTree = "<group>";
 		};
 		056ABC4C232832CA00077607 = {
@@ -373,12 +393,16 @@
 				05328DA323817F5B00E3512B /* DatabaseRealm.swift in Sources */,
 				05D0757623647A0B0070380C /* WebLoginViewController.swift in Sources */,
 				05FB477723ABDA3D00504997 /* NewsPhotoCell.swift in Sources */,
+				055079BE23C78748009CA112 /* AsyncOperation.swift in Sources */,
 				058719172332C6D2006F00D5 /* FriendCell.swift in Sources */,
 				0587190E23329A92006F00D5 /* GroupCell.swift in Sources */,
+				055079C223C82E78009CA112 /* ParseDataOperation.swift in Sources */,
 				053536D62339CDCD00F6C7C4 /* GradientView.swift in Sources */,
 				052ED72923413D8D00623AD1 /* News.swift in Sources */,
 				056ABC5B232832CA00077607 /* LoginViewController.swift in Sources */,
+				055079C423C8331C009CA112 /* DisplayDataOperation.swift in Sources */,
 				0508F52F237BC703004E950B /* VKApi.swift in Sources */,
+				055079C023C78B23009CA112 /* FetchDataOperation.swift in Sources */,
 				05694F0F232F5C7100F28C85 /* GroupsController.swift in Sources */,
 				058719152332BD28006F00D5 /* Group.swift in Sources */,
 				056ABC59232832CA00077607 /* AppDelegate.swift in Sources */,
