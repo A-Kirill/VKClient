@@ -88,8 +88,12 @@ class GroupsController: UITableViewController {
         parseDataOperation.addDependency(fetchDataOperation)
         myQueue.addOperation(parseDataOperation)
         
+        let saveOperation = SaveToRealmOperation()
+        saveOperation.addDependency(parseDataOperation)
+        myQueue.addOperation(saveOperation)
+        
         let displayDataOperation = DisplayDataOperation(controller: self)
-        displayDataOperation.addDependency(parseDataOperation)
+        displayDataOperation.addDependency(saveOperation)
         OperationQueue.main.addOperation(displayDataOperation)
 
     }
