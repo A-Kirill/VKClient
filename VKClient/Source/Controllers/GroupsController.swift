@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 import RealmSwift
 
 class GroupsController: UITableViewController {
@@ -16,6 +17,11 @@ class GroupsController: UITableViewController {
     var allGroupsRealm: Results<Groups>!
     
     var token: NotificationToken?
+    
+    private let myQueue: OperationQueue = {
+        let queue = OperationQueue()
+        return queue
+    }()
     
     @IBAction func addGroups(segue: UIStoryboardSegue) {
         if segue.identifier == "addGroup" {
@@ -36,12 +42,11 @@ class GroupsController: UITableViewController {
 
         // 1) request data from Realm
         allGroupsRealm = DatabaseRealm.shared.getRealmGroups()
-        // 2) Or from web
-        vkApi.getUserGroups(){ allGroups in }
-//        vkApi.getUserGroups(){ [weak self] allGroups in
-//            self?.allGroups = allGroups
-//            self?.tableView.reloadData()
-//        }
+//        // 2) Or from web
+//        vkApi.getUserGroups(){ allGroups in }
+        
+        // using Operation to fetch Data from web
+        getDataOperation()
         
         //subscribing on changes
         token = allGroupsRealm?.observe { changes in
@@ -61,6 +66,31 @@ class GroupsController: UITableViewController {
 //                print(indexesModifications)
             }
         }
+
+    }
+    
+
+    func getDataOperation() {
+        
+        let url = "https://api.vk.com/method/groups.get"
+        let parameters: Parameters = [
+            "user_id": Session.instance.userId,
+            "extended": "1",
+            "access_token": Session.instance.token,
+            "v": "5.102"
+        ]
+        
+        let request = Alamofire.request(url, method: .get, parameters: parameters)
+        let fetchDataOperation = FetchDataOperation(request: request)
+        myQueue.addOperation(fetchDataOperation)
+        
+        let parseDataOperation = ParseDataOperation()
+        parseDataOperation.addDependency(fetchDataOperation)
+        myQueue.addOperation(parseDataOperation)
+        
+        let displayDataOperation = DisplayDataOperation(controller: self)
+        displayDataOperation.addDependency(parseDataOperation)
+        OperationQueue.main.addOperation(displayDataOperation)
 
     }
     
