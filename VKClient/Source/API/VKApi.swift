@@ -134,7 +134,7 @@ class VKApi {
                     guard let data = response.value,
                         let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
                             let result = String(bytes: response.value!, encoding: .utf8)
-                            print(result)
+                            print(result ?? "error")
                             return
                     }
                     DispatchQueue.main.async {
@@ -160,7 +160,7 @@ class VKApi {
                 guard let data = response.value,
                     let photoNews = try? JSONDecoder().decode(PhotoNewsWrapped.self, from: data) else {
                         let result = String(bytes: response.value!, encoding: .utf8)
-                        print(result)
+                        print(result ?? "error")
                         return
                 }
                 completion(photoNews.response)
