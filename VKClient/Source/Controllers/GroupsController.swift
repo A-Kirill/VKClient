@@ -45,7 +45,7 @@ class GroupsController: UITableViewController {
 //        // 2) Or from web
 //        vkApi.getUserGroups(){ allGroups in }
         
-        // using Operation to fetch Data from web
+        // MARK: -  using Operation to fetch Data from web
         getDataOperation()
         
         //subscribing on changes

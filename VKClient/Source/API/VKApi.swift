@@ -28,14 +28,16 @@ class VKApi {
         // transfer request to global queue:
         DispatchQueue.global().async {
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                guard let data = response.value,
-                    let friend = try? JSONDecoder().decode(FriendResponseWrapped.self, from: data)
-                    else { return }
-                //                print(String(bytes: data, encoding: .utf8) ?? "")
-                
-                //save data in realm
-                DatabaseRealm.shared.saveFriendData(friend.response.items)
-                completion(friend.response.items)
+                DispatchQueue.global().async {
+                    guard let data = response.value,
+                        let friend = try? JSONDecoder().decode(FriendResponseWrapped.self, from: data)
+                        else { return }
+                    //                print(String(bytes: data, encoding: .utf8) ?? "")
+                    //save data in realm
+                    DatabaseRealm.shared.saveFriendData(friend.response.items)
+                    
+                    completion(friend.response.items)
+                }
             }
         }
     }
@@ -52,12 +54,13 @@ class VKApi {
         
         DispatchQueue.global().async {
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                guard let data = response.value else { return }
-                let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
-                //save data in Realm
-                DatabaseRealm.shared.saveGroupsData(groups.response.items)
-                
-                completion(groups.response.items)
+                DispatchQueue.global().async {
+                    guard let data = response.value else { return }
+                    let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
+                    //save data in Realm
+                    DatabaseRealm.shared.saveGroupsData(groups.response.items)
+                    completion(groups.response.items)
+                }
             }
         }
     }
@@ -77,11 +80,16 @@ class VKApi {
         
         DispatchQueue.global().async {
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                guard let data = response.value,
-                    let photos = try? JSONDecoder().decode(Photo.self, from: data)
-                    else { return }
-                //            print(String(bytes: data, encoding: .utf8) ?? "")
-                completion(photos.response.items)
+                DispatchQueue.global().async {
+                    guard let data = response.value,
+                        let photos = try? JSONDecoder().decode(Photo.self, from: data)
+                        else { return }
+                    //            print(String(bytes: data, encoding: .utf8) ?? "")
+                    DispatchQueue.main.async {
+                        completion(photos.response.items)
+                    }
+                }
+                
             }
         }
     }
@@ -99,9 +107,13 @@ class VKApi {
         
         DispatchQueue.global().async {
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                guard let data = response.value else { return }
-                let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
-                completion(groups.response.items)
+                DispatchQueue.global().async {
+                    guard let data = response.value else { return }
+                    let groups = try! JSONDecoder().decode(GroupResponseWrapped.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(groups.response.items)
+                    }
+                }
             }
         }
     }
@@ -118,13 +130,17 @@ class VKApi {
         
         DispatchQueue.global().async {
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                guard let data = response.value,
-                    let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
-                        let result = String(bytes: response.value!, encoding: .utf8)
-                        print(result)
-                        return
+                DispatchQueue.global().async {
+                    guard let data = response.value,
+                        let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
+                            let result = String(bytes: response.value!, encoding: .utf8)
+                            print(result)
+                            return
+                    }
+                    DispatchQueue.main.async {
+                        completion(news.response)
+                    }
                 }
-                completion(news.response)
             }
         }
     }
@@ -151,24 +167,6 @@ class VKApi {
             }
         }
     }
-//    func getUserNews(completion: @escaping ([NewsModel]) -> Void ) {
-//        let method = "newsfeed.get"
-//        let parameters: Parameters = [
-//            "filters": "post",
-//            "count": "5",
-//            "access_token": Session.instance.token,
-//            "v": "5.103"
-//        ]
-//        Alamofire.request(urlApi+method, method: .get, parameters: parameters).responseData { response in
-//            guard let data = response.value,
-//                let news = try? JSONDecoder().decode(NewsResponseWrapped.self, from: data) else {
-//                    let result = String(bytes: response.value!, encoding: .utf8)
-//                    print(result)
-//                    return
-//            }
-//            completion(news.response.items)
-//        }
-//    }
     
     // Generic
     //    func fetchRequest<T: Decodable>(url: String, params: [String: Any], completionHandler: @escaping (T) -> ()) {
