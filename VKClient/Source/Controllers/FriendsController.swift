@@ -8,8 +8,8 @@
 
 import UIKit
 import RealmSwift
-import FirebaseAuth
-import FirebaseDatabase
+//import FirebaseAuth
+//import FirebaseDatabase
 
 class FriendsController: UITableViewController {
     
@@ -20,25 +20,25 @@ class FriendsController: UITableViewController {
     var token: NotificationToken?
     
     override func viewDidLoad() {
-        //FIREBASE TEST:
-        //Register user in Firebase:
-        Auth.auth().createUser(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
-            print(result.debugDescription)
-            print(error.debugDescription)
-        }
-        Auth.auth().createUser(withEmail: "developer@mail.ru", password: "543210") { (result, error) in }
-        //Authorisation
-        Auth.auth().signIn(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
-            print(result?.user.uid)
-        }
-        
-        //FirebaseDatabase :
-        let ref = Database.database().reference(withPath: "users/TestUser/addedGroups") //"users"
-        ref.observe(.value/*.childAdded*/) { snapshot in
-            print("-----------------------")
-            print(snapshot.value)
-            print("-----------------------")
-        }
+//        //FIREBASE TEST:
+//        //Register user in Firebase:
+//        Auth.auth().createUser(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
+//            print(result.debugDescription)
+//            print(error.debugDescription)
+//        }
+//        Auth.auth().createUser(withEmail: "developer@mail.ru", password: "543210") { (result, error) in }
+//        //Authorisation
+//        Auth.auth().signIn(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
+//            print(result?.user.uid)
+//        }
+//        
+//        //FirebaseDatabase :
+//        let ref = Database.database().reference(withPath: "users/TestUser/addedGroups") //"users"
+//        ref.observe(.value/*.childAdded*/) { snapshot in
+//            print("-----------------------")
+//            print(snapshot.value)
+//            print("-----------------------")
+//        }
         
         super.viewDidLoad()
 

@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import RealmSwift
 
+
 class VKApi {
 //example link: https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
     let urlApi = "https://api.vk.com/method/"
@@ -41,6 +42,38 @@ class VKApi {
             }
         }
     }
+    
+    //get friends with PromiseKit
+//    func getUserPromiseKit() -> Promise<[Friend]> {
+//        let method = "friends.get"
+//        let parameters: Parameters = [
+//            "user_id": Session.instance.userId,
+//            "order": "name",
+//            "fields": "domain, photo_50",
+//            "access_token": Session.instance.token,
+//            "v": "5.102"
+//        ]
+//        
+//        let promise = Promise<[Friend]> { resolver in
+//            Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
+//                switch response.result {
+//                case .success(let value):
+//                    guard let data = response.value else { return }
+//                    do {
+//                        let friend = try JSONDecoder().decode(FriendResponseWrapped.self, from: data)
+//                        resolver.fulfill(friend.response.items)
+//                    } catch let decodeError {
+//                        print("Decode error", decodeError)
+//                    }
+//                case .failure(let error):
+//                    resolver.reject(error)
+//                }
+//            }
+//        }
+//        
+//        return promise
+//    }
+    
     
     //get groups
     func getUserGroups(completion: @escaping ([Groups]) -> Void ) {

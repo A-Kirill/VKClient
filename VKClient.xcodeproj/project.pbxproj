@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0508F52C237B0C4A004E950B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0508F52B237B0C4A004E950B /* UserSettings.swift */; };
 		0508F52F237BC703004E950B /* VKApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0508F52E237BC703004E950B /* VKApi.swift */; };
+		050ABAFE23D169FB00F0E337 /* FuturesPromises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050ABAFD23D169FB00F0E337 /* FuturesPromises.swift */; };
 		05297BBE2364B92B00306039 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05297BBD2364B92B00306039 /* WebKit.framework */; };
 		052ED7232341364200623AD1 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 052ED7222341364200623AD1 /* NewsCell.xib */; };
 		052ED72523413A2500623AD1 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052ED72423413A2500623AD1 /* NewsCell.swift */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		0508F52B237B0C4A004E950B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		0508F52E237BC703004E950B /* VKApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKApi.swift; sourceTree = "<group>"; };
+		050ABAFD23D169FB00F0E337 /* FuturesPromises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuturesPromises.swift; sourceTree = "<group>"; };
 		05297BBD2364B92B00306039 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		052ED7222341364200623AD1 /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		052ED72423413A2500623AD1 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
@@ -118,6 +120,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		050ABAFC23D169A600F0E337 /* Futures */ = {
+			isa = PBXGroup;
+			children = (
+				050ABAFD23D169FB00F0E337 /* FuturesPromises.swift */,
+			);
+			path = Futures;
+			sourceTree = "<group>";
+		};
 		050BF004232D577E00DE18D8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +140,7 @@
 		050BF005232D57A300DE18D8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				050ABAFC23D169A600F0E337 /* Futures */,
 				055079BC23C78672009CA112 /* Operation */,
 				0508F52D237BC6E3004E950B /* API */,
 				05A11C4C234E4227009615B4 /* Animation */,
@@ -403,6 +414,7 @@
 				055079C223C82E78009CA112 /* ParseDataOperation.swift in Sources */,
 				053536D62339CDCD00F6C7C4 /* GradientView.swift in Sources */,
 				052ED72923413D8D00623AD1 /* News.swift in Sources */,
+				050ABAFE23D169FB00F0E337 /* FuturesPromises.swift in Sources */,
 				056ABC5B232832CA00077607 /* LoginViewController.swift in Sources */,
 				055079C423C8331C009CA112 /* DisplayDataOperation.swift in Sources */,
 				0508F52F237BC703004E950B /* VKApi.swift in Sources */,
@@ -575,12 +587,14 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = VKClient/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.k-anisimov.VKClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -598,6 +612,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = VKClient/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
