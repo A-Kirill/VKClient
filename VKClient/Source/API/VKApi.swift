@@ -57,7 +57,7 @@ class VKApi {
         let promise = Promise<[Friend]> { resolver in
             Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
                 switch response.result {
-                case .success(let value):
+                case .success(_):
                     guard let data = response.value else { return }
                     do {
                         let friend = try JSONDecoder().decode(FriendResponseWrapped.self, from: data)

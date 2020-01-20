@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
-//import FirebaseAuth
-//import FirebaseDatabase
+import FirebaseAuth
+import FirebaseDatabase
+import PromiseKit
 
 class FriendsController: UITableViewController {
     
@@ -19,27 +20,7 @@ class FriendsController: UITableViewController {
     
     var token: NotificationToken?
     
-    override func viewDidLoad() {
-//        //FIREBASE TEST:
-//        //Register user in Firebase:
-//        Auth.auth().createUser(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
-//            print(result.debugDescription)
-//            print(error.debugDescription)
-//        }
-//        Auth.auth().createUser(withEmail: "developer@mail.ru", password: "543210") { (result, error) in }
-//        //Authorisation
-//        Auth.auth().signIn(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
-//            print(result?.user.uid)
-//        }
-//        
-//        //FirebaseDatabase :
-//        let ref = Database.database().reference(withPath: "users/TestUser/addedGroups") //"users"
-//        ref.observe(.value/*.childAdded*/) { snapshot in
-//            print("-----------------------")
-//            print(snapshot.value)
-//            print("-----------------------")
-//        }
-        
+    override func viewDidLoad() {      
         super.viewDidLoad()
 
         // 1) request data from Realm
@@ -48,11 +29,19 @@ class FriendsController: UITableViewController {
         animateList()
         
         // 2) Or from web
-        vkApi.getFriends(){ allFriends in }
-//        vkApi.getFriends(){ [weak self] allFriends in
-//            self?.allFriends = allFriends
-//            self?.tableView.reloadData()
-//        }
+ //       vkApi.getFriends(){ allFriends in }
+        
+        // 3) request data with PromiseKit
+        firstly {
+            vkApi.getUserPromiseKit()
+        }.done { [weak self] allFriends in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+                DatabaseRealm.shared.saveFriendData(allFriends)
+        }.catch { error in
+                print(error)
+        }
+
         
         //subscribing on changes
         token = allFriendsRealm?.observe { changes in
@@ -177,15 +166,6 @@ class FriendsController: UITableViewController {
             }
         }
     }
-    
-    // for course 1
-    //    var allFriends: [User] = [
-    //        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
-    //        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
-    //        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
-    //        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
-    //        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
-    //    ]
 }
 
 extension String {
@@ -194,3 +174,32 @@ extension String {
     }
 }
 
+//        //FIREBASE TEST:
+//        //Register user in Firebase:
+//        Auth.auth().createUser(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
+//            print(result.debugDescription)
+//            print(error.debugDescription)
+//        }
+//        Auth.auth().createUser(withEmail: "developer@mail.ru", password: "543210") { (result, error) in }
+//        //Authorisation
+//        Auth.auth().signIn(withEmail: "kirill@mail.ru", password: "543210") { (result, error) in
+//            print(result?.user.uid)
+//        }
+//
+//        //FirebaseDatabase :
+//        let ref = Database.database().reference(withPath: "users/TestUser/addedGroups") //"users"
+//        ref.observe(.value/*.childAdded*/) { snapshot in
+//            print("-----------------------")
+//            print(snapshot.value)
+//            print("-----------------------")
+//        }
+
+
+// for course 1
+//    var allFriends: [User] = [
+//        User(name: "Cook", avatar: UIImage(named: "Cook"), photo: [UIImage(named: "c1"), UIImage(named: "Cook")]),
+//        User(name: "Federighi", avatar: UIImage(named: "Federighi"), photo: [UIImage(named: "f1"), UIImage(named: "Federighi")]),
+//        User(name: "Ive", avatar: UIImage(named: "Ive"), photo: [UIImage(named: "i1"), UIImage(named: "Ive")]),
+//        User(name: "Jobs", avatar: UIImage(named: "Jobs"), photo: [UIImage(named: "j1"), UIImage(named: "j2"), UIImage(named: "j3"), UIImage(named: "j4")]),
+//        User(name: "Wozniak", avatar: UIImage(named: "Wozniak"), photo: [UIImage(named: "w1"), UIImage(named: "Wozniak")])
+//    ]
