@@ -55,18 +55,22 @@ class VKApi {
         ]
         
         let promise = Promise<[Friend]> { resolver in
-            Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
-                switch response.result {
-                case .success(_):
-                    guard let data = response.value else { return }
-                    do {
-                        let friend = try JSONDecoder().decode(FriendResponseWrapped.self, from: data)
-                        resolver.fulfill(friend.response.items)
-                    } catch let decodeError {
-                        print("Decode error", decodeError)
+            DispatchQueue.global().async {
+                Alamofire.request(self.urlApi+method, method: .get, parameters: parameters).responseData { response in
+                    DispatchQueue.global().async {
+                        switch response.result {
+                        case .success(_):
+                            guard let data = response.value else { return }
+                            do {
+                                let friend = try JSONDecoder().decode(FriendResponseWrapped.self, from: data)
+                                resolver.fulfill(friend.response.items)
+                            } catch let decodeError {
+                                print("Decode error", decodeError)
+                            }
+                        case .failure(let error):
+                            resolver.reject(error)
+                        }
                     }
-                case .failure(let error):
-                    resolver.reject(error)
                 }
             }
         }
