@@ -15,6 +15,7 @@ class GroupsController: UITableViewController {
     let vkApi = VKApi()
     var allGroups = [Groups]()
     var allGroupsRealm: Results<Groups>!
+    lazy var photoService = PhotoService(container: self.tableView)
     
     var token: NotificationToken?
     
@@ -107,18 +108,18 @@ class GroupsController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath) as! GroupCell
 
         cell.nameLabel.text = allGroupsRealm[indexPath.row].name
-
-        if let imageURL = URL(string: allGroupsRealm[indexPath.row].photo50) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: imageURL)
-                if let data = data {
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async {
-                        cell.groupImageView.image = image
-                    }
-                }
-            }
-        }
+        cell.groupImageView.image = photoService.photo(atIndexpath: indexPath, byUrl: allGroupsRealm[indexPath.row].photo50)
+//        if let imageURL = URL(string: allGroupsRealm[indexPath.row].photo50) {
+//            DispatchQueue.global().async {
+//                let data = try? Data(contentsOf: imageURL)
+//                if let data = data {
+//                    let image = UIImage(data: data)
+//                    DispatchQueue.main.async {
+//                        cell.groupImageView.image = image
+//                    }
+//                }
+//            }
+//        }
         return cell
     }
     

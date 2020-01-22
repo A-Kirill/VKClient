@@ -15,8 +15,8 @@ import PromiseKit
 class FriendsController: UITableViewController {
     
     let vkApi = VKApi()
-//    var allFriends = [Friend]()
     var allFriendsRealm: Results<Friend>!
+    lazy var photoService = PhotoService(container: self.tableView)
     
     var token: NotificationToken?
     
@@ -129,19 +129,22 @@ class FriendsController: UITableViewController {
 
         cell.friendNameLabel.text = allFriendsRealm[indexPath.row].firstName + " " + allFriendsRealm[indexPath.row].lastName
         
-        //String URL to UIImage
-        if let imageURL = URL(string: allFriendsRealm[indexPath.row].photo) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: imageURL)
-                if let data = data {
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async {
-                        cell.friendImageView.image = image
-                    }
-                }
-            }
-        }
+        // load from cache or web (new version):
+        cell.friendImageView.image = photoService.photo(atIndexpath: indexPath, byUrl: allFriendsRealm[indexPath.row].photo)
         
+        // load from web (old version). convert String URL to UIImage
+//        if let imageURL = URL(string: allFriendsRealm[indexPath.row].photo) {
+//            DispatchQueue.global().async {
+//                let data = try? Data(contentsOf: imageURL)
+//                if let data = data {
+//                    let image = UIImage(data: data)
+//                    DispatchQueue.main.async {
+//                        cell.friendImageView.image = image
+//                    }
+//                }
+//            }
+//        }
+
         return cell
     }
 

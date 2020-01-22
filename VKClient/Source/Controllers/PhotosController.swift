@@ -18,6 +18,7 @@ class PhotosController: UICollectionViewController {
     var selectedUserPhoto = [PhotoItem]()
     var urlsChosenFriends = [String]()
     var photosLike = [Int]()
+    lazy var photoService = PhotoService(container: self.collectionView)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,29 +40,29 @@ class PhotosController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return urlsChosenFriends.count
-//        return image.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PhotoCell
-        if let imageURL = URL(string: urlsChosenFriends[indexPath.item]) {
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: imageURL)
-                if let data = data {
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async {
-                        cell.photoImageView.image = image
-                    }
-                }
-            }
-        }
- //       cell.photoImageView.image = image[indexPath.item]
+        
+        // load from cache or web (new version):
+        cell.photoImageView.image = photoService.photo(atIndexpath: indexPath, byUrl: urlsChosenFriends[indexPath.item])
+        
+        // load from web (old version):
+//        if let imageURL = URL(string: urlsChosenFriends[indexPath.item]) {
+//            DispatchQueue.global().async {
+//                let data = try? Data(contentsOf: imageURL)
+//                if let data = data {
+//                    let image = UIImage(data: data)
+//                    DispatchQueue.main.async {
+//                        cell.photoImageView.image = image
+//                    }
+//                }
+//            }
+//        }
         cell.countLikeLabel.text = String(photosLike[indexPath.item])
     
         return cell
     }
-    
-    //    var image: [UIImage?] = [UIImage(named: "empty")]
 }
