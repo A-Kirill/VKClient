@@ -27,6 +27,7 @@
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwe-34-hBB">
                         <rect key="frame" x="67" y="8" width="117" height="20.5"/>
+                        <color key="backgroundColor" red="0.75355024690000005" green="0.93575517159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20.5" id="GBy-CR-Rmb"/>
                             <constraint firstAttribute="width" constant="117" id="ngX-YZ-x7b"/>
@@ -37,6 +38,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hf2-mh-ED6">
                         <rect key="frame" x="67" y="32" width="109" height="26"/>
+                        <color key="backgroundColor" red="0.75355024690000005" green="0.93575517159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="109" id="dlj-VU-p4q"/>
                             <constraint firstAttribute="height" constant="26" id="she-p5-lex"/>
@@ -47,6 +49,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="cQb-Cr-r0Q">
                         <rect key="frame" x="8" y="66" width="398" height="83"/>
+                        <color key="backgroundColor" red="0.75355024690000005" green="0.93575517159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="83" id="SiQ-0V-Nh7"/>
                         </constraints>
@@ -106,6 +109,7 @@
                         <state key="normal" title="Button" image="retweet"/>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.75355024690000005" green="0.93575517159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="J9c-qD-Axq" firstAttribute="leading" secondItem="qqv-Se-7Qb" secondAttribute="trailing" constant="75" id="0EB-ss-PDl"/>
                     <constraint firstAttribute="bottom" secondItem="8tJ-4p-CKi" secondAttribute="bottom" constant="20.5" id="1s1-Uc-hSO"/>
