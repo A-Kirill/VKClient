@@ -10,7 +10,7 @@ import UIKit
 
 class NewsCell: UITableViewCell {
     
-    var count = 9
+    var count = 0
     
     @IBOutlet weak var avaImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

@@ -20,6 +20,13 @@ class NewsController: UITableViewController {
     let vkApi = VKApi()
     var allUserNews: NewsResponse?
     var photoNews: PhotoNewsResponse?
+    lazy var photoService = PhotoService(container: self.tableView)
+    
+    let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy HH.mm"
+        return df
+    }()
 //    var allUserNews = [NewsModel]()
 
     override func viewDidLoad() {
@@ -47,17 +54,25 @@ class NewsController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allNews.count
+//        return allNews.count
+        return allUserNews?.groups.count ?? 5
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newsIdentifier", for: indexPath) as! NewsCell
-        cell.nameLabel.text = allNews[indexPath.row].name
-        cell.dateLabel.text = allNews[indexPath.row].date
-        cell.descriptionLabel.text = allNews[indexPath.row].description
-        cell.avaImage?.image = allNews[indexPath.row].avatar
-        cell.newsImage?.image = allNews[indexPath.row].image
+        let groupList = allUserNews?.groups
+        cell.nameLabel.text = groupList?[indexPath.row].name
+        
+        
+//        cell.avaImage?.image = photoService.photo(atIndexpath: indexPath, byUrl: (groupList?[indexPath.row].photo100)!)
+
+
+//        cell.nameLabel.text = allNews[indexPath.row].name
+//        cell.dateLabel.text = allNews[indexPath.row].date
+//        cell.descriptionLabel.text = allNews[indexPath.row].description
+//        cell.avaImage?.image = allNews[indexPath.row].avatar
+//        cell.newsImage?.image = allNews[indexPath.row].image
         return cell
     }
 

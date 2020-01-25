@@ -26,11 +26,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwe-34-hBB">
-                        <rect key="frame" x="67" y="8" width="117" height="20.5"/>
+                        <rect key="frame" x="67" y="8" width="327" height="21"/>
                         <color key="backgroundColor" red="0.75355024690000005" green="0.93575517159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20.5" id="GBy-CR-Rmb"/>
-                            <constraint firstAttribute="width" constant="117" id="ngX-YZ-x7b"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -121,6 +120,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="qqv-Se-7Qb" secondAttribute="bottom" constant="10" id="6Bu-yo-Cnk"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6XC-cg-PwH" secondAttribute="bottom" constant="10" id="6Mh-86-QiM"/>
                     <constraint firstItem="nYX-Rk-P8K" firstAttribute="top" secondItem="jh6-8g-07h" secondAttribute="bottom" constant="13" id="EVK-NQ-4W0"/>
+                    <constraint firstAttribute="trailing" secondItem="jwe-34-hBB" secondAttribute="trailing" constant="20" id="J84-Th-bmw"/>
                     <constraint firstItem="6XC-cg-PwH" firstAttribute="leading" secondItem="nYX-Rk-P8K" secondAttribute="trailing" constant="66" id="Lfb-aA-NvC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="J9c-qD-Axq" secondAttribute="bottom" constant="10" id="NLY-oA-8sS"/>
                     <constraint firstItem="jwe-34-hBB" firstAttribute="top" secondItem="s08-K1-hqU" secondAttribute="top" constant="8" id="OyI-7S-a5K"/>
