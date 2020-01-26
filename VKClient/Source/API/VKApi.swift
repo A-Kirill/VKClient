@@ -160,7 +160,7 @@ class VKApi {
         let method = "newsfeed.get"
         let parameters: Parameters = [
             "filters": "post",
-            "count": "5",
+            "count": "20",
             "access_token": Session.instance.token,
             "v": "5.103"
         ]

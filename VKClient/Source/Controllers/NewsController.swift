@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class NewsController: UITableViewController {
     
@@ -19,8 +20,10 @@ class NewsController: UITableViewController {
     
     let vkApi = VKApi()
     var allUserNews: NewsResponse?
+    var allGroupsRealm: Results<Groups>!
     var photoNews: PhotoNewsResponse?
     lazy var photoService = PhotoService(container: self.tableView)
+    var dateTextCache: [IndexPath: String] = [:]
     
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -33,7 +36,7 @@ class NewsController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "newsIdentifier")
-
+        allGroupsRealm = DatabaseRealm.shared.getRealmGroups()
         //request news post
         vkApi.getUserNews() { [weak self] allUserNews in
             self?.allUserNews = allUserNews
@@ -55,17 +58,37 @@ class NewsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return allNews.count
-        return allUserNews?.groups.count ?? 5
+        return allUserNews?.items.count ?? 0
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newsIdentifier", for: indexPath) as! NewsCell
-        let groupList = allUserNews?.groups
-        cell.nameLabel.text = groupList?[indexPath.row].name
+        let itemList = allUserNews?.items
         
+        cell.descriptionLabel.text = itemList?[indexPath.row].text
+        cell.counterLabel.text = String(describing: itemList?[indexPath.row].likes?.count)
+        cell.viewCounter.text = String(describing: itemList?[indexPath.row].views?.count)
+        cell.dateLabel.text = getCellDateText(forIndexPath: indexPath, andTimestamp: Double((itemList?[indexPath.row].date)!))
+        for i in allGroupsRealm {
+            if -i.id == itemList?[indexPath.row].sourceID {
+                if let imageURL = URL(string: i.photo50) {
+                    DispatchQueue.global().async {
+                        let data = try? Data(contentsOf: imageURL)
+                        if let data = data {
+                            let image = UIImage(data: data)
+                            DispatchQueue.main.async {
+                                cell.avaImage.image = image
+                                cell.nameLabel.text = i.name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         
-//        cell.avaImage?.image = photoService.photo(atIndexpath: indexPath, byUrl: (groupList?[indexPath.row].photo100)!)
+//        cell.newsImage?.image = itemList.photo(atIndexpath: indexPath, byUrl: (itemList?[indexPath.row].attachments)!)
 
 
 //        cell.nameLabel.text = allNews[indexPath.row].name
@@ -74,6 +97,17 @@ class NewsController: UITableViewController {
 //        cell.avaImage?.image = allNews[indexPath.row].avatar
 //        cell.newsImage?.image = allNews[indexPath.row].image
         return cell
+    }
+    
+    func getCellDateText(forIndexPath indexPath: IndexPath, andTimestamp timestamp: Double) -> String {
+        if let stringDate = dateTextCache[indexPath] {
+            return stringDate
+        } else {
+            let date = Date(timeIntervalSince1970: timestamp)
+            let stringDate = dateFormatter.string(from: date)
+            dateTextCache[indexPath] = stringDate
+            return stringDate
+        }
     }
 
 }
