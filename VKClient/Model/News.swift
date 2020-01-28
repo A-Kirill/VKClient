@@ -78,6 +78,18 @@ struct GroupNews: Decodable {
 struct Attachment: Decodable {
     let type: String?
     let doc: Doc?
+    let photo: PhotoFromNews?
+}
+
+struct PhotoFromNews: Decodable {
+    let sizes: [PhotoSize]
+}
+
+struct PhotoSize: Decodable {
+    let type: String
+    let url: String
+    let width: Int
+    let height: Int
 }
 
 struct Doc: Decodable {

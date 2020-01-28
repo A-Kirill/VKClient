@@ -11,12 +11,6 @@ import RealmSwift
 
 class NewsController: UITableViewController {
     
-    var allNews: [News] = [
-        News(name: "SlashGear", date: "26.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S3"), description: "Wheat is one of the world's vital crops, joining corn and rice in feeding a vast number of people around the world. Experts have been raising the alarm bell about climate change and its potential impact on these crops for years"),
-        News(name: "SlashGear", date: "29.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S1"), description: "iOS 13 already rolled out but, unlike the betas and Apple's announcements, it launched alone. The much-hyped iPadOS came a few days later but the matching macOS Catalina, a.k.a. macOS 10.15 was still nowhere in sight. Apple said it would start rolling out some time in October but didn't give a date users could pin on their calendar."),
-        News(name: "SlashGear", date: "26.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S2"), description: "It's been a big week for iFixit teardowns. First, we saw the company teardown the iPhone 11 after last week's look inside the iPhone 11 Pro. That was followed by a teardown of the Nintendo Switch Lite, but today we're back to looking at Apple devices."),
-        News(name: "GeekBrains", date: "26.09.2019", avatar: UIImage(named: "GeekBrains"), image: UIImage(named: "G1"), description: "Программист должен быть ленивым, нетерпеливым и самоуверенным. Так считает Ларри Уолл, создатель языка Perl. И большинство IT-специалистов подтвердят, что это правда.")
-    ]
     
     let vkApi = VKApi()
     var allUserNews: NewsResponse?
@@ -47,6 +41,8 @@ class NewsController: UITableViewController {
             self?.photoNews = photoNews
             self?.tableView.reloadData()
         }
+        
+        setupRefreshControl()
     }
 
     // MARK: - Table view data source
@@ -86,6 +82,16 @@ class NewsController: UITableViewController {
                 }
             }
         }
+        
+        if let attach = itemList?[indexPath.row].attachments {
+            for ph in attach {
+                for urlPhoto in ph.photo!.sizes {
+                    if urlPhoto.type == "x" {
+                        cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
+                    }
+                }
+            }
+        }
 
         
 //        cell.newsImage?.image = itemList.photo(atIndexpath: indexPath, byUrl: (itemList?[indexPath.row].attachments)!)
@@ -109,5 +115,30 @@ class NewsController: UITableViewController {
             return stringDate
         }
     }
+    
+    //Pull-to-refresh
+    fileprivate func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing...")
+        refreshControl?.tintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+    }
+
+    @objc func refreshNews() {
+        self.refreshControl?.beginRefreshing()
+        vkApi.getUserNews() { [weak self] allUserNews in
+            self?.allUserNews = allUserNews
+            self?.tableView.reloadData()
+        }
+        self.refreshControl?.endRefreshing()
+    }
 
 }
+
+
+//var allNews: [News] = [
+//    News(name: "SlashGear", date: "26.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S3"), description: "Wheat is one of the world's vital crops, joining corn and rice in feeding a vast number of people around the world. Experts have been raising the alarm bell about climate change and its potential impact on these crops for years"),
+//    News(name: "SlashGear", date: "29.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S1"), description: "iOS 13 already rolled out but, unlike the betas and Apple's announcements, it launched alone. The much-hyped iPadOS came a few days later but the matching macOS Catalina, a.k.a. macOS 10.15 was still nowhere in sight. Apple said it would start rolling out some time in October but didn't give a date users could pin on their calendar."),
+//    News(name: "SlashGear", date: "26.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S2"), description: "It's been a big week for iFixit teardowns. First, we saw the company teardown the iPhone 11 after last week's look inside the iPhone 11 Pro. That was followed by a teardown of the Nintendo Switch Lite, but today we're back to looking at Apple devices."),
+//    News(name: "GeekBrains", date: "26.09.2019", avatar: UIImage(named: "GeekBrains"), image: UIImage(named: "G1"), description: "Программист должен быть ленивым, нетерпеливым и самоуверенным. Так считает Ларри Уолл, создатель языка Perl. И большинство IT-специалистов подтвердят, что это правда.")
+//]
