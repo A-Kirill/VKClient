@@ -53,7 +53,6 @@ class NewsController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return allNews.count
         return allUserNews?.items.count ?? 0
     }
     
@@ -85,7 +84,8 @@ class NewsController: UITableViewController {
         
         if let attach = itemList?[indexPath.row].attachments {
             for ph in attach {
-                for urlPhoto in ph.photo!.sizes {
+                let photos = ph.photo?.sizes ?? []
+                for urlPhoto in photos {
                     if urlPhoto.type == "x" {
                         cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
                     }
@@ -93,15 +93,6 @@ class NewsController: UITableViewController {
             }
         }
 
-        
-//        cell.newsImage?.image = itemList.photo(atIndexpath: indexPath, byUrl: (itemList?[indexPath.row].attachments)!)
-
-
-//        cell.nameLabel.text = allNews[indexPath.row].name
-//        cell.dateLabel.text = allNews[indexPath.row].date
-//        cell.descriptionLabel.text = allNews[indexPath.row].description
-//        cell.avaImage?.image = allNews[indexPath.row].avatar
-//        cell.newsImage?.image = allNews[indexPath.row].image
         return cell
     }
     
@@ -142,3 +133,9 @@ class NewsController: UITableViewController {
 //    News(name: "SlashGear", date: "26.09.2019", avatar: UIImage(named: "Slash"), image: UIImage(named: "S2"), description: "It's been a big week for iFixit teardowns. First, we saw the company teardown the iPhone 11 after last week's look inside the iPhone 11 Pro. That was followed by a teardown of the Nintendo Switch Lite, but today we're back to looking at Apple devices."),
 //    News(name: "GeekBrains", date: "26.09.2019", avatar: UIImage(named: "GeekBrains"), image: UIImage(named: "G1"), description: "Программист должен быть ленивым, нетерпеливым и самоуверенным. Так считает Ларри Уолл, создатель языка Perl. И большинство IT-специалистов подтвердят, что это правда.")
 //]
+
+//        cell.nameLabel.text = allNews[indexPath.row].name
+//        cell.dateLabel.text = allNews[indexPath.row].date
+//        cell.descriptionLabel.text = allNews[indexPath.row].description
+//        cell.avaImage?.image = allNews[indexPath.row].avatar
+//        cell.newsImage?.image = allNews[indexPath.row].image
