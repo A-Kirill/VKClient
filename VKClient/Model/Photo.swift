@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 class Photo: Codable {
-    let response: PhotoResponse
+    let response: PhotoResponse?
 
     init(response: PhotoResponse) {
         self.response = response

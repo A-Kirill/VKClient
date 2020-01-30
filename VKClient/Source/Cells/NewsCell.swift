@@ -22,6 +22,8 @@ class NewsCell: UITableViewCell {
     
     @IBAction func presButton(_ sender: UIButton) {
         
+        let count = Int(self.counterLabel.text ?? "")
+        
         // animate views and labels
         UIView.animate(withDuration: 0.2,
                        delay: 0.1,
@@ -39,12 +41,12 @@ class NewsCell: UITableViewCell {
                 UIView.transition(with: counterLabel,
                                     duration: 0.6,
                                     options: .transitionFlipFromBottom,
-                                    animations: { self.counterLabel.text = String(self.count) })
+                                    animations: { self.counterLabel.text = String(count! - 1) })
             } else {
                 UIView.transition(with: counterLabel,
                                     duration: 0.6,
                                     options: .transitionFlipFromBottom,
-                                    animations: { self.counterLabel.text = String(self.count + 1) })
+                                    animations: { self.counterLabel.text = String(count! + 1) })
             }
     }
     

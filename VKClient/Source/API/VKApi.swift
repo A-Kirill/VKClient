@@ -123,7 +123,7 @@ class VKApi {
                         else { return }
                     //            print(String(bytes: data, encoding: .utf8) ?? "")
                     DispatchQueue.main.async {
-                        completion(photos.response.items)
+                        completion(photos.response!.items)
                     }
                 }
                 

@@ -48,7 +48,11 @@ class NewsController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 388
+        if indexPath.section == 0 {
+            return UITableView.automaticDimension
+        } else {
+            return 40
+        }
     }
     
     
@@ -62,8 +66,8 @@ class NewsController: UITableViewController {
         let itemList = allUserNews?.items
         
         cell.descriptionLabel.text = itemList?[indexPath.row].text
-        cell.counterLabel.text = String(describing: itemList?[indexPath.row].likes?.count)
-        cell.viewCounter.text = String(describing: itemList?[indexPath.row].views?.count)
+        cell.counterLabel.text = "\(itemList?[indexPath.row].likes?.count ?? 0)"
+        cell.viewCounter.text = "\(itemList?[indexPath.row].views?.count ?? 0)"
         cell.dateLabel.text = getCellDateText(forIndexPath: indexPath, andTimestamp: Double((itemList?[indexPath.row].date)!))
         for i in allGroupsRealm {
             if -i.id == itemList?[indexPath.row].sourceID {
@@ -87,7 +91,19 @@ class NewsController: UITableViewController {
                 let photos = ph.photo?.sizes ?? []
                 for urlPhoto in photos {
                     if urlPhoto.type == "x" {
-                        cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
+                        if let imageURL = URL(string: urlPhoto.url) {
+                            DispatchQueue.global().async {
+                                let data = try? Data(contentsOf: imageURL)
+                                if let data = data {
+                                    let image = UIImage(data: data)
+                                    DispatchQueue.main.async {
+                                        cell.imageView?.image = image
+                                    }
+                                }
+                            }
+                        }
+                        //or with PhotoService:
+                        //cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
                     }
                 }
             }

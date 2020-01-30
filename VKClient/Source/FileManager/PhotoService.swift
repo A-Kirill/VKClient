@@ -64,17 +64,18 @@ class PhotoService {
 
     
     private func loadPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) {
-        Alamofire.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
-            guard
-                let data = response.data,
-                let image = UIImage(data: data) else { return }
-            
-            self?.images[url] = image
-            self?.saveImageToCache(url: url, image: image)
-            DispatchQueue.main.async {
-                self?.container.reloadRow(atIndexpath: indexPath)
+        DispatchQueue.global().async {
+            Alamofire.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
+                guard
+                    let data = response.data,
+                    let image = UIImage(data: data) else { return }
+                
+                self?.images[url] = image
+                self?.saveImageToCache(url: url, image: image)
+                DispatchQueue.main.async {
+                    self?.container.reloadRow(atIndexpath: indexPath)
+                }
             }
-            
         }
     }
     
