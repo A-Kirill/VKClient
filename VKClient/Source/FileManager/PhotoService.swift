@@ -31,7 +31,7 @@ class PhotoService {
         
         guard let cachesDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
         
-        let hashName = url.split(separator: "/").last ?? "default"//maybe should delete
+        let hashName = url.split(separator: "/").last ?? "default"
         return cachesDirectory.appendingPathComponent(PhotoService.pathName + "/" + hashName).path
     }
     
@@ -61,20 +61,17 @@ class PhotoService {
     }
     
     
-
-    
+    let queue = DispatchQueue(label: "photoqueue")
     private func loadPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) {
-        DispatchQueue.global().async {
-            Alamofire.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
-                guard
-                    let data = response.data,
-                    let image = UIImage(data: data) else { return }
-                
-                self?.images[url] = image
-                self?.saveImageToCache(url: url, image: image)
-                DispatchQueue.main.async {
-                    self?.container.reloadRow(atIndexpath: indexPath)
-                }
+        Alamofire.request(url).responseData(queue: self.queue) { [weak self] response in
+            guard
+                let data = response.data,
+                let image = UIImage(data: data) else { return }
+
+            self?.images[url] = image
+            self?.saveImageToCache(url: url, image: image)
+            DispatchQueue.main.async {
+                self?.container.reloadRow(atIndexpath: indexPath)
             }
         }
     }

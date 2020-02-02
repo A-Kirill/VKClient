@@ -91,19 +91,19 @@ class NewsController: UITableViewController {
                 let photos = ph.photo?.sizes ?? []
                 for urlPhoto in photos {
                     if urlPhoto.type == "x" {
-                        if let imageURL = URL(string: urlPhoto.url) {
-                            DispatchQueue.global().async {
-                                let data = try? Data(contentsOf: imageURL)
-                                if let data = data {
-                                    let image = UIImage(data: data)
-                                    DispatchQueue.main.async {
-                                        cell.imageView?.image = image
-                                    }
-                                }
-                            }
-                        }
-                        //or with PhotoService:
-                        //cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
+                        cell.imageView?.image = photoService.photo(atIndexpath: indexPath, byUrl: urlPhoto.url)
+//                        if let imageURL = URL(string: urlPhoto.url) {
+//                            DispatchQueue.global().async {
+//                                let data = try? Data(contentsOf: imageURL)
+//                                if let data = data {
+//                                    let image = UIImage(data: data)
+//                                    DispatchQueue.main.async {
+//                                        cell.imageView?.image = image
+//                                    }
+//                                }
+//                            }
+//                        }
+
                     }
                 }
             }
