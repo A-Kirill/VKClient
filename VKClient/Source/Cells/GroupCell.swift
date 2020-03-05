@@ -24,4 +24,10 @@ class GroupCell: UITableViewCell {
             nameLabel.text = nil
             groupImageView.image = nil
     }
+    
+    //____\/___for factory
+    func configure(with viewModel: GroupsViewModel) {
+        nameLabel.text = viewModel.nameLabel
+        groupImageView.image = viewModel.groupImageView
+    }
 }

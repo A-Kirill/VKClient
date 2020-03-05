@@ -14,8 +14,14 @@ import PromiseKit
 
 class FriendsController: UITableViewController {
     
-    let vkApi = VKApi()
-    var allFriendsRealm: Results<Friend>!
+//    let vkApi = VKApi()
+//    var allFriendsRealm: Results<Friend>!
+    
+    //____\/____for adapter pattern
+    private let vkApi = FriendsAdapter()
+    private var allFriendsRealm: [FriendStruct] = []
+    //----/\----
+    
     lazy var photoService = PhotoService(container: self.tableView)
     
     var token: NotificationToken?
@@ -23,6 +29,16 @@ class FriendsController: UITableViewController {
     override func viewDidLoad() {      
         super.viewDidLoad()
 
+        //____\/____for adapter pattern
+        vkApi.getFriendsAdapt(){ [weak self] allFriendsRealm in
+            self?.allFriendsRealm = allFriendsRealm
+            self?.tableView.reloadData()
+        }
+        print(allFriendsRealm.count)
+        print(allFriendsRealm)
+        //----/\----
+  
+        /* uncomment after adapter test
         // 1) request data from Realm
         allFriendsRealm = DatabaseRealm.shared.getRealmFriends()
         
@@ -60,7 +76,7 @@ class FriendsController: UITableViewController {
 //                print(indexesInsert)
 //                print(indexesModifications)
             }
-        }
+        } */
     }
     
     func insertInTable(indexPath: [IndexPath]){
@@ -131,7 +147,7 @@ class FriendsController: UITableViewController {
         
         // load from cache or web (new version):
         cell.friendImageView.image = photoService.photo(atIndexpath: indexPath, byUrl: allFriendsRealm[indexPath.row].photo)
-        
+        cell.backgroundColor = .brandLightBlue
         // load from web (old version). convert String URL to UIImage
 //        if let imageURL = URL(string: allFriendsRealm[indexPath.row].photo) {
 //            DispatchQueue.global().async {

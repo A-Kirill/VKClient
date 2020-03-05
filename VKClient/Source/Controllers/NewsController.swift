@@ -127,7 +127,8 @@ class NewsController: UITableViewController {
     fileprivate func setupRefreshControl() {
         refreshControl = UIRefreshControl()
         refreshControl?.attributedTitle = NSAttributedString(string: "Refreshing...")
-        refreshControl?.tintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+//        refreshControl?.tintColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        refreshControl?.tintColor = .brandLilac
         refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
     }
 

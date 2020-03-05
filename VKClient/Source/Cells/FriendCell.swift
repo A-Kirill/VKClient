@@ -26,7 +26,8 @@ class FriendCell: UITableViewCell {
         friendImageView.layer.cornerRadius = friendImageView.frame.size.width / 2
         friendImageView.layer.masksToBounds = true
         
-        shadowView.layer.shadowColor = UIColor.black.cgColor
+//        shadowView.layer.shadowColor = UIColor.black.cgColor
+        shadowView.layer.shadowColor = .brandBlack
         shadowView.layer.shadowOpacity = 1
         shadowView.layer.shadowRadius = 10
         shadowView.layer.shadowOffset = CGSize.zero
