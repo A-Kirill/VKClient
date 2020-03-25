@@ -10,7 +10,8 @@ import UIKit
 
 class AllGroupsController: UITableViewController {
     
-    let vkApi = VKApi()
+   // let vkApi = VKApi()
+    let proxy = VKApiProxy(service: VKApi())
     var allGroups = [Groups]()
     
 //    var allGroups: [Group] = [
@@ -23,7 +24,7 @@ class AllGroupsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        vkApi.getSearchedGroup(for: "IOS developers"){ [weak self] allGroups in
+        proxy.getSearchedGroup(for: "IOS developers"){ [weak self] allGroups in
             self?.allGroups = allGroups
             self?.tableView.reloadData()
         }

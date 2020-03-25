@@ -11,7 +11,12 @@ import Alamofire
 import RealmSwift
 import PromiseKit
 
-class VKApi {
+protocol VKApiInterface {
+    
+    func getSearchedGroup(for keyword: String, completion: @escaping ([Groups]) -> Void )
+}
+
+class VKApi: VKApiInterface {
 //example link: https://api.vk.com/method/METHOD_NAME?PARAMETERS&access_token=ACCESS_TOKEN&v=V
     let urlApi = "https://api.vk.com/method/"
     
